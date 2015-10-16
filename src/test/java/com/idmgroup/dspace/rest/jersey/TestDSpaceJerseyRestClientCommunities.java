@@ -5,9 +5,13 @@ import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_PASSWORD;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_URL;
 import static com.idmgroup.dspace.rest.TestConstants.TEST_COMMUNITY_NAME;
 import static com.idmgroup.dspace.rest.jersey.JerseyTestUtils.user;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import javax.ws.rs.WebApplicationException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -62,23 +66,39 @@ public class TestDSpaceJerseyRestClientCommunities {
         clean();
     }
 
-    @After
-    public void tearDown() throws Exception {
-        clean();
-    }
-
     @Test
-    public void testCreateCommunity() throws Exception {
+    public void testCreateUpdateDeleteCommunity() throws Exception {
         DSpaceJerseyRestClient client = newClient(DEMO_DSPACE_URL);
         client.loginJsonAs(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
         try {
             Community community = new Community();
             community.setName(TEST_COMMUNITY_NAME);
             Community result = client.communities().postJsonAsCommunity(community);
+            final Integer comId = result.getId();
             assertNotNull("created community", result);
             assertNotNull("created community ID", result.getId());
             assertTrue("created community ID > 0", result.getId() > 0);
             assertThat("created community handle", result.getHandle(), new Matches("[0-9]+/[0-9]+"));
+
+            result = client.communities().community_id(comId).getAsJson(Community.class);
+            assertEquals("get community ID", comId, result.getId());
+            assertEquals("get community name", TEST_COMMUNITY_NAME, result.getName());
+
+            result.setShortDescription("A short description for Arno.db");
+            client.communities().community_id(comId).putJsonAs(result, String.class);
+
+            result = client.communities().community_id(comId).getAsJson(Community.class);
+            assertEquals("get2 community ID", comId, result.getId());
+            assertEquals("get2 community name", TEST_COMMUNITY_NAME, result.getName());
+            assertEquals("get2 community description", "A short description for Arno.db", result.getShortDescription());
+
+            client.communities().community_id(comId).deleteAs(String.class);
+            try {
+                result = client.communities().community_id(comId).getAsJson(Community.class);
+                fail("Expected WebApplicationException to be thrown");
+            } catch (WebApplicationException e) {
+                assertEquals("HTTP status", 404, e.getResponse().getStatus());
+            }
         } finally {
             client.logout();
         }

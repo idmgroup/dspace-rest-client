@@ -5,14 +5,18 @@ import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_ADMIN;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_PASSWORD;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_URL;
 import static com.idmgroup.dspace.rest.TestConstants.TEST_COMMUNITY_NAME;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.internal.matchers.Matches;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.idmgroup.dspace.rest.jersey.Community;
@@ -53,23 +57,39 @@ public class TestDSpaceRestClientCommunities {
         clean();
     }
 
-    @After
-    public void tearDown() {
-        clean();
-    }
-
     @Test
-    public void testCreateCommunity() {
+    public void testCreateUpdateDeleteCommunity() {
         DSpaceRestClient client = newClient(DEMO_DSPACE_URL);
         client.login(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
         try {
             Community community = new Community();
             community.setName(TEST_COMMUNITY_NAME);
             Community result = client.createCommunity(null, null, null, community);
+            final Integer comId = result.getId();
             assertNotNull("created community", result);
             assertNotNull("created community ID", result.getId());
             assertTrue("created community ID > 0", result.getId() > 0);
             assertThat("created community handle", result.getHandle(), new Matches("[0-9]+/[0-9]+"));
+
+            result = client.getCommunity(comId, null, null, null, null);
+            assertEquals("get community ID", comId, result.getId());
+            assertEquals("get community name", TEST_COMMUNITY_NAME, result.getName());
+
+            result.setShortDescription("A short description for Arno.db");
+            client.updateCommunity(comId, null, null, null, result);
+
+            result = client.getCommunity(comId, null, null, null, null);
+            assertEquals("get2 community ID", comId, result.getId());
+            assertEquals("get2 community name", TEST_COMMUNITY_NAME, result.getName());
+            assertEquals("get2 community description", "A short description for Arno.db", result.getShortDescription());
+
+            client.deleteCommunity(comId, null, null, null);
+            try {
+                result = client.getCommunity(comId, null, null, null, null);
+                fail("Expected HttpClientErrorException to be thrown");
+            } catch (HttpClientErrorException e) {
+                assertEquals("HTTP status", HttpStatus.NOT_FOUND, e.getStatusCode());
+            }
         } finally {
             client.logout();
         }
