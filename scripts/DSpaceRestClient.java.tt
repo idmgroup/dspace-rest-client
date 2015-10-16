@@ -1,0 +1,135 @@
+package com.idmgroup.dspace.rest;
+
+import java.io.InputStream;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dspace.rest.common.Bitstream;
+import org.dspace.rest.common.Collection;
+import org.dspace.rest.common.Community;
+import org.dspace.rest.common.Item;
+import org.dspace.rest.common.MetadataEntry;
+import org.dspace.rest.common.ResourcePolicy;
+import org.dspace.rest.common.Status;
+import org.dspace.rest.common.User;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+/**
+ * DSpace REST client implementation.
+ * 
+ * It is based on the Spring {@link RestTemplate} and manages the "rest-dspace-token" header for you.
+ * 
+ * @author arnaud
+ */
+public class DSpaceRestClient {
+
+    private String baseUrl;
+
+    private String dspaceToken;
+
+    private final Log logger = LogFactory.getLog(getClass());
+
+    private MediaType requestMediaType = MediaType.APPLICATION_JSON;
+
+    private RestTemplate restTemplate;
+
+    /**
+     * New instance, unconfigured.
+     */
+    public DSpaceRestClient() {
+    }
+
+    /**
+     * New instance with a base URL and a configured {@link RestTemplate} instance.
+     * 
+     * @param baseUrl
+     *            the base URL of the DSpace REST API, e.g. "https://demo.dspace.org/rest".
+     * @param restTemplate
+     */
+    public DSpaceRestClient(String baseUrl, RestTemplate restTemplate) {
+        setBaseUrl(baseUrl);
+        setRestTemplate(restTemplate);
+    }
+
+    /**
+     * Gets the base URL of the DSpace REST API.
+     * 
+     * @return the base URL.
+     */
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    /**
+     * Gets the request media type.
+     * 
+     * @return the request media type.
+     */
+    public MediaType getRequestMediaType() {
+        return requestMediaType;
+    }
+
+    /**
+     * Gets the REST template.
+     * 
+     * @return the REST template.
+     */
+    public RestTemplate getRestTemplate() {
+        return restTemplate;
+    }
+
+    /**
+     * Sets the base URL of the DSpace REST API.
+     * 
+     * @param baseUrl
+     *            the base URL of the DSpace REST API, e.g. "https://demo.dspace.org/rest".
+     */
+    public void setBaseUrl(String baseUrl) {
+        if (baseUrl.endsWith("/"))
+            this.baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
+        else
+            this.baseUrl = baseUrl;
+    }
+
+    /**
+     * Sets the request media type.
+     * 
+     * @param requestMediaType
+     *            the request media type.
+     */
+    public void setRequestMediaType(MediaType requestMediaType) {
+        this.requestMediaType = requestMediaType;
+    }
+
+    /**
+     * Sets the REST template.
+     * 
+     * @param restTemplate
+     *            the REST template.
+     */
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    private HttpEntity<?> toEntity(Object requestBody) {
+        HttpHeaders headers = new HttpHeaders();
+        if (dspaceToken != null) {
+            headers.add("rest-dspace-token", dspaceToken);
+        }
+        if (requestMediaType != null) {
+            headers.setContentType(requestMediaType);
+        }
+        HttpEntity<Object> entity = new HttpEntity<Object>(requestBody, headers);
+        return entity;
+    }
+
+    [% generated_code %]
+
+}

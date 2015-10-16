@@ -1,17 +1,19 @@
-package com.group.dspace.rest;
+package com.idmgroup.dspace.rest;
 
+import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_ADMIN;
+import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_BAD_PASSWORD;
+import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_PASSWORD;
+import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_URL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.Before;
+import org.dspace.rest.common.User;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import com.idmgroup.dspace.rest.DSpaceRestClient;
 
 /**
  * Tests the REST client (Index).
@@ -20,16 +22,9 @@ import com.idmgroup.dspace.rest.DSpaceRestClient;
  */
 public class TestDSpaceRestClientIndex {
 
-    private static final String DEMO_DSPACE_URL = "https://demo.dspace.org/rest";
-
     private DSpaceRestClient newClient(String url) {
         RestTemplate restTemplate = new RestTemplate();
         return new DSpaceRestClient(url, restTemplate);
-    }
-
-    @Before
-    public void setUp() {
-        TestUtils.trustAllSSL();
     }
 
     /**
@@ -38,7 +33,7 @@ public class TestDSpaceRestClientIndex {
     @Test
     public void testIndex() {
         DSpaceRestClient client = newClient(DEMO_DSPACE_URL);
-        String index = client.index();
+        String index = client.sayHtmlHello();
         assertTrue("index title", index.indexOf("<title>DSpace REST - index</title>") >= 0);
         assertTrue("index index heading", index.indexOf("<h2>Index</h2>") >= 0);
         assertTrue("index communities heading", index.indexOf("<h2>Communities</h2>") >= 0);
@@ -53,7 +48,7 @@ public class TestDSpaceRestClientIndex {
     @Test
     public void testLogin() {
         DSpaceRestClient client = newClient(DEMO_DSPACE_URL);
-        String token = client.login("dspacedemo+admin@gmail.com", "dspace");
+        String token = client.login(new User(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
         assertTrue("dspace token", StringUtils.isNotBlank(token));
         assertTrue("dspace token format", token.matches("[-0-9A-Fa-f]+"));
     }
@@ -65,7 +60,7 @@ public class TestDSpaceRestClientIndex {
     public void testLoginFail() {
         DSpaceRestClient client = newClient(DEMO_DSPACE_URL);
         try {
-            client.login("dspacedemo+admin@gmail.com", "DSPACE");
+            client.login(new User(DEMO_DSPACE_ADMIN, DEMO_DSPACE_BAD_PASSWORD));
             fail("Expected HttpClientErrorException to be thrown");
         } catch (HttpClientErrorException e) {
             assertEquals("HTTP status", HttpStatus.FORBIDDEN, e.getStatusCode());
@@ -78,7 +73,7 @@ public class TestDSpaceRestClientIndex {
     @Test
     public void testLogout() {
         DSpaceRestClient client = newClient(DEMO_DSPACE_URL);
-        client.login("dspacedemo+admin@gmail.com", "dspace");
+        client.login(new User(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
         client.logout();
     }
 
