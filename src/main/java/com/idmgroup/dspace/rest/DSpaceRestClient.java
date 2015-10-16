@@ -6,20 +6,21 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dspace.rest.common.Bitstream;
-import org.dspace.rest.common.Collection;
-import org.dspace.rest.common.Community;
-import org.dspace.rest.common.Item;
-import org.dspace.rest.common.MetadataEntry;
-import org.dspace.rest.common.ResourcePolicy;
-import org.dspace.rest.common.Status;
-import org.dspace.rest.common.User;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.idmgroup.dspace.rest.jersey.Bitstream;
+import com.idmgroup.dspace.rest.jersey.Collection;
+import com.idmgroup.dspace.rest.jersey.Community;
+import com.idmgroup.dspace.rest.jersey.Item;
+import com.idmgroup.dspace.rest.jersey.MetadataEntry;
+import com.idmgroup.dspace.rest.jersey.ResourcePolicy;
+import com.idmgroup.dspace.rest.jersey.Status;
+import com.idmgroup.dspace.rest.jersey.User;
 
 /**
  * DSpace REST client implementation.

@@ -124,6 +124,7 @@
           <xs:element name="copyrightText" type="xs:string" minOccurs="0"/>
           <xs:element name="countItems" type="xs:int" minOccurs="0"/>
           <xs:element name="introductoryText" type="xs:string" minOccurs="0"/>
+          <xs:element name="logo" type="bitstream" minOccurs="0"/>
           <xs:element name="parentCommunity" type="community" minOccurs="0"/>
           <xs:element name="shortDescription" type="xs:string" minOccurs="0"/>
           <xs:element name="sidebarText" type="xs:string" minOccurs="0"/>

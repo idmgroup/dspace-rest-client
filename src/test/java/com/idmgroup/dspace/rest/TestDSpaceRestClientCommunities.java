@@ -1,5 +1,6 @@
 package com.idmgroup.dspace.rest;
 
+import static com.idmgroup.dspace.rest.jersey.JerseyTestUtils.user;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_ADMIN;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_PASSWORD;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_URL;
@@ -8,19 +9,20 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import org.dspace.rest.common.Community;
-import org.dspace.rest.common.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.internal.matchers.Matches;
 import org.springframework.web.client.RestTemplate;
 
+import com.idmgroup.dspace.rest.jersey.Community;
+import com.idmgroup.dspace.rest.jersey.User;
+
 public class TestDSpaceRestClientCommunities {
 
     private void clean() {
         DSpaceRestClient client = newClient(DEMO_DSPACE_URL);
-        client.login(new User(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
+        client.login(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
         cleanCommunitiesByName(client, TEST_COMMUNITY_NAME);
     }
 
@@ -59,7 +61,7 @@ public class TestDSpaceRestClientCommunities {
     @Test
     public void testCreateCommunity() {
         DSpaceRestClient client = newClient(DEMO_DSPACE_URL);
-        client.login(new User(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
+        client.login(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
         try {
             Community community = new Community();
             community.setName(TEST_COMMUNITY_NAME);

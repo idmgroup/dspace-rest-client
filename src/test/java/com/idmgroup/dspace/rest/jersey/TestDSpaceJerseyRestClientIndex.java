@@ -11,7 +11,6 @@ import static org.junit.Assert.fail;
 
 import javax.ws.rs.WebApplicationException;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import com.sun.jersey.api.client.Client;
@@ -59,7 +58,6 @@ public class TestDSpaceJerseyRestClientIndex {
     public void testLogin() throws Exception {
         DSpaceJerseyRestClient client = newClient(DEMO_DSPACE_URL);
         String token = client.loginJsonAs(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
-        assertTrue("dspace token", StringUtils.isNotBlank(token));
         assertTrue("dspace token format", token.matches("[-0-9A-Fa-f]+"));
     }
 
