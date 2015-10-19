@@ -138,7 +138,7 @@ sub traverse_methods {
                 $request_entity = 'toEntity(requestBody)';
             } elsif ($request_media_type eq '*/*') {
                 push @params_strs, 'InputStream requestBody';
-                $request_entity = 'toEntity(requestBody)';
+                $request_entity = 'toEntity(new InputStreamResource(requestBody))';
             }
         }
 

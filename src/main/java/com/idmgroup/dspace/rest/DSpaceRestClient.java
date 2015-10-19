@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -222,7 +223,7 @@ public class DSpaceRestClient {
         .queryParam("userAgent", userAgent)
         .queryParam("xforwardedfor", xforwardedfor);
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
-                toEntity(requestBody), Void.class).getBody();
+                toEntity(new InputStreamResource(requestBody)), Void.class).getBody();
 
         return result;
     }
@@ -730,7 +731,7 @@ public class DSpaceRestClient {
         .queryParam("userAgent", userAgent)
         .queryParam("xforwardedfor", xforwardedfor);
         Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
-                toEntity(requestBody), Bitstream.class).getBody();
+                toEntity(new InputStreamResource(requestBody)), Bitstream.class).getBody();
 
         return result;
     }
