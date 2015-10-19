@@ -33,11 +33,11 @@ public class TestDSpaceRestClientCollections {
     private void cleanCommunitiesByName(DSpaceRestClient client, String communityName) {
         int offset = 0;
         while (true) {
-            Community[] slice = client.getCommunities(null, 20, offset, null, null, null);
+            Community[] slice = client.getCommunities(null, 20, offset);
             if (slice != null && slice.length > 0) {
                 for (Community com : slice) {
                     if (communityName.equals(com.getName())) {
-                        client.deleteCommunity(com.getId(), null, null, null);
+                        client.deleteCommunity(com.getId());
                     }
                 }
             } else {
@@ -65,39 +65,39 @@ public class TestDSpaceRestClientCollections {
         try {
             Community community = new Community();
             community.setName(TEST_COMMUNITY_NAME);
-            Community resultCom = client.createCommunity(null, null, null, community);
+            Community resultCom = client.createCommunity(community);
             final Integer comId = resultCom.getId();
 
             Collection collection = new Collection();
             collection.setName(TEST_COLLECTION_NAME);
-            Collection resultCol = client.addCommunityCollection(comId, null, null, null, collection);
+            Collection resultCol = client.addCommunityCollection(comId, collection);
             final Integer colId = resultCol.getId();
             assertNotNull("created collection", resultCol);
             assertNotNull("created collection ID", resultCol.getId());
             assertTrue("created collection ID > 0", resultCol.getId() > 0);
             assertThat("created collection handle", resultCol.getHandle(), new Matches("[0-9]+/[0-9]+"));
 
-            resultCol = client.getCollection(colId, null, 0, 0, null, null, null);
+            resultCol = client.getCollection(colId, null, 0, 0);
             assertEquals("get collection ID", colId, resultCol.getId());
             assertEquals("get collection name", TEST_COLLECTION_NAME, resultCol.getName());
 
             resultCol.setShortDescription("A short description for Arno.db pictures");
-            client.updateCollection(colId, null, null, null, resultCol);
+            client.updateCollection(colId, resultCol);
 
-            resultCol = client.getCollection(colId, null, 0, 0, null, null, null);
+            resultCol = client.getCollection(colId, null, 0, 0);
             assertEquals("get2 collection ID", colId, resultCol.getId());
             assertEquals("get2 collection name", TEST_COLLECTION_NAME, resultCol.getName());
             assertEquals("get2 collection description", "A short description for Arno.db pictures",
                     resultCol.getShortDescription());
 
-            client.deleteCollection(colId, null, null, null);
+            client.deleteCollection(colId);
             try {
-                resultCol = client.getCollection(colId, null, 0, 0, null, null, null);
+                resultCol = client.getCollection(colId, null, 0, 0);
                 fail("Expected HttpClientErrorException to be thrown");
             } catch (HttpClientErrorException e) {
                 assertEquals("HTTP status", HttpStatus.NOT_FOUND, e.getStatusCode());
             }
-            client.deleteCommunity(comId, null, null, null);
+            client.deleteCommunity(comId);
         } finally {
             client.logout();
         }

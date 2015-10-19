@@ -3,6 +3,7 @@
 use strict;
 
 use LWP::Simple;
+use Storable qw(dclone);
 use XML::LibXML;
 
 my $wadl_file = shift;
@@ -84,6 +85,15 @@ sub get_return_type {
     die $id;
 }
 
+sub is_optional_param {
+    my $name = shift;
+    if ($name eq 'userIP' || $name eq 'userAgent' || $name eq 'xforwardedfor') {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 my $parser = XML::LibXML->new();
 
 my $wadl = $parser->parse_file($wadl_file) or die;
@@ -110,22 +120,45 @@ sub traverse_methods {
 
         my $method_name = $xpc->findvalue('@id', $method);
 
-        my $url_code = "        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path(\"$full_path\")";
+        my @overloads;
+        push @overloads, {
+            params_strs => [],
+            params_code => '',
+            url_code => "        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path(\"$full_path\")"
+        };
 
         my $params = $xpc->find('wadl:request/wadl:param', $method);
-        my @params_strs;
-        my $params_code = '';
         foreach my $param (@$path_params) {
             my $name = $param->getAttribute('name');
-            push @params_strs, to_java_type($param->getAttribute('type')).' '.$name;
-            $params_code .= "        uriVariables.put(\"$name\", $name);\n";
+            foreach my $overl (@overloads) {
+                push @{$overl->{params_strs}}, to_java_type($param->getAttribute('type')).' '.$name;
+                $overl->{params_code} .= <<EOF
+        if ($name != null) {
+            uriVariables.put(\"$name\", $name);
+        }
+EOF
+                ;
+            }
         }
         foreach my $param (@$params) {
             my $name = $param->getAttribute('name');
-            push @params_strs, to_java_type($param->getAttribute('type')).' '.$name;
-            $url_code .= "\n        .queryParam(\"$name\", $name)";
+            my @selection;
+            if (is_optional_param($name)) {
+                if (@overloads == 1) {
+                    push @overloads, dclone($overloads[0]);
+                }
+                push @selection, $overloads[0];
+            } else {
+                @selection = @overloads;
+            }
+            foreach my $overl (@selection) {
+                push @{$overl->{params_strs}}, to_java_type($param->getAttribute('type')).' '.$name;
+                $overl->{url_code} .= "\n                .queryParam(\"$name\", $name)";
+            }
         }
-        $url_code .= ';';
+        foreach my $overl (@overloads) {
+            $overl->{url_code} .= ';';
+        }
 
         my $request_entity = 'toEntity(null)';
         my $request_representation = $xpc->find('wadl:request/wadl:representation[1]', $method)->[0];
@@ -134,15 +167,17 @@ sub traverse_methods {
             my $request_media_type = $request_representation->getAttribute('mediaType');
             if (defined $element && $element ne '') {
                 $element = transform_element($element);
-                push @params_strs, $element.' requestBody';
+                foreach my $overl (@overloads) {
+                    push @{$overl->{params_strs}}, $element.' requestBody';
+                }
                 $request_entity = 'toEntity(requestBody)';
             } elsif ($request_media_type eq '*/*') {
-                push @params_strs, 'InputStream requestBody';
+                foreach my $overl (@overloads) {
+                    push @{$overl->{params_strs}}, 'InputStream requestBody';
+                }
                 $request_entity = 'toEntity(new InputStreamResource(requestBody))';
             }
         }
-
-        my $params_str = join ', ', @params_strs;
 
         my $method_verb = $method->getAttribute('name');
 
@@ -171,18 +206,19 @@ EOF
             ;
         }
 
-        my $build_code = 'build()';
-        if ($params_code ne '') {
-            $pre_call_code .= "\n        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();\n".$params_code;
-            $build_code = 'buildAndExpand(uriVariables)';
-        }
-        $pre_call_code .= $url_code;
-
-        if ($method_name eq 'logout') {
-            print <<EOF
+        foreach my $overl (@overloads) {
+            my $params_str = join ', ', @{$overl->{params_strs}};
+            my $build_code = 'build()';
+            my $pre_call_code2 = '';
+            if ($overl->{params_code} ne '') {
+                $pre_call_code2 = "\n        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();\n".$overl->{params_code};
+                $build_code = 'buildAndExpand(uriVariables)';
+            }
+            if ($method_name eq 'logout') {
+                print <<EOF
     public $return_type $method_name($params_str) {
         try {
-$pre_call_code
+$pre_call_code$pre_call_code2$overl->{url_code}
             $return_type result = restTemplate.exchange(queryBuilder.$build_code.toUri(), HttpMethod.$method_verb,
                     $request_entity, $return_type.class).getBody();
 $post_call_code
@@ -193,10 +229,11 @@ $post_call_code
     }
 
 EOF
-        } else {
-            print <<EOF
+                ;
+            } else {
+                print <<EOF
     public $return_type $method_name($params_str) {
-$pre_call_code
+$pre_call_code$pre_call_code2$overl->{url_code}
         $return_type result = restTemplate.exchange(queryBuilder.$build_code.toUri(), HttpMethod.$method_verb,
                 $request_entity, $return_type.class).getBody();
 $post_call_code
@@ -204,7 +241,8 @@ $post_call_code
     }
 
 EOF
-            ;
+                ;
+            }
         }
     }
 }

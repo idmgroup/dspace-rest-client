@@ -135,11 +135,26 @@ public class DSpaceRestClient {
     public byte[] getBitstreamData(Integer bitstream_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("bitstream_id", bitstream_id);
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/retrieve")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        byte[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+                toEntity(null), byte[].class).getBody();
+
+        return result;
+    }
+
+    public byte[] getBitstreamData(Integer bitstream_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/retrieve");
         byte[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), byte[].class).getBody();
 
@@ -149,11 +164,26 @@ public class DSpaceRestClient {
     public Void addBitstreamPolicy(Integer bitstream_id, String userIP, String userAgent, String xforwardedfor, ResourcePolicy requestBody) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("bitstream_id", bitstream_id);
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/policy")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+                toEntity(requestBody), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void addBitstreamPolicy(Integer bitstream_id, ResourcePolicy requestBody) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/policy");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
                 toEntity(requestBody), Void.class).getBody();
 
@@ -163,7 +193,9 @@ public class DSpaceRestClient {
     public ResourcePolicy[] getBitstreamPolicies(Integer bitstream_id) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("bitstream_id", bitstream_id);
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/policy");
         ResourcePolicy[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), ResourcePolicy[].class).getBody();
@@ -174,11 +206,26 @@ public class DSpaceRestClient {
     public Void updateBitstream(Integer bitstream_id, String userIP, String userAgent, String xforwardedfor, Bitstream requestBody) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("bitstream_id", bitstream_id);
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+                toEntity(requestBody), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void updateBitstream(Integer bitstream_id, Bitstream requestBody) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
                 toEntity(requestBody), Void.class).getBody();
 
@@ -188,11 +235,26 @@ public class DSpaceRestClient {
     public Void deleteBitstream(Integer bitstream_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("bitstream_id", bitstream_id);
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void deleteBitstream(Integer bitstream_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
@@ -202,12 +264,28 @@ public class DSpaceRestClient {
     public Bitstream getBitstream(Integer bitstream_id, String expand, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("bitstream_id", bitstream_id);
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}")
-        .queryParam("expand", expand)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+                toEntity(null), Bitstream.class).getBody();
+
+        return result;
+    }
+
+    public Bitstream getBitstream(Integer bitstream_id, String expand) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}")
+                .queryParam("expand", expand);
         Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), Bitstream.class).getBody();
 
@@ -217,11 +295,26 @@ public class DSpaceRestClient {
     public Void updateBitstreamData(Integer bitstream_id, String userIP, String userAgent, String xforwardedfor, InputStream requestBody) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("bitstream_id", bitstream_id);
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/data")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+                toEntity(new InputStreamResource(requestBody)), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void updateBitstreamData(Integer bitstream_id, InputStream requestBody) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/data");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
                 toEntity(new InputStreamResource(requestBody)), Void.class).getBody();
 
@@ -231,12 +324,32 @@ public class DSpaceRestClient {
     public Void deleteBitstreamPolicy(Integer policy_id, Integer bitstream_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("policy_id", policy_id);
-        uriVariables.put("bitstream_id", bitstream_id);
+        if (policy_id != null) {
+            uriVariables.put("policy_id", policy_id);
+        }
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/policy/{policy_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void deleteBitstreamPolicy(Integer policy_id, Integer bitstream_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (policy_id != null) {
+            uriVariables.put("policy_id", policy_id);
+        }
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/policy/{policy_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
@@ -245,12 +358,23 @@ public class DSpaceRestClient {
 
     public Bitstream[] getBitstreams(String expand, Integer limit, Integer offset, String userIP, String userAgent, String xforwardedfor) {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams")
-        .queryParam("expand", expand)
-        .queryParam("limit", limit)
-        .queryParam("offset", offset)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Bitstream[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+                toEntity(null), Bitstream[].class).getBody();
+
+        return result;
+    }
+
+    public Bitstream[] getBitstreams(String expand, Integer limit, Integer offset) {
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams")
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset);
         Bitstream[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
                 toEntity(null), Bitstream[].class).getBody();
 
@@ -260,11 +384,26 @@ public class DSpaceRestClient {
     public Void updateCommunity(Integer community_id, String userIP, String userAgent, String xforwardedfor, Community requestBody) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("community_id", community_id);
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+                toEntity(requestBody), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void updateCommunity(Integer community_id, Community requestBody) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
                 toEntity(requestBody), Void.class).getBody();
 
@@ -274,12 +413,28 @@ public class DSpaceRestClient {
     public Community getCommunity(Integer community_id, String expand, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("community_id", community_id);
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}")
-        .queryParam("expand", expand)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+                toEntity(null), Community.class).getBody();
+
+        return result;
+    }
+
+    public Community getCommunity(Integer community_id, String expand) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}")
+                .queryParam("expand", expand);
         Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), Community.class).getBody();
 
@@ -289,11 +444,26 @@ public class DSpaceRestClient {
     public Void deleteCommunity(Integer community_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("community_id", community_id);
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void deleteCommunity(Integer community_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
@@ -303,11 +473,26 @@ public class DSpaceRestClient {
     public Community addCommunityCommunity(Integer community_id, String userIP, String userAgent, String xforwardedfor, Community requestBody) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("community_id", community_id);
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/communities")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+                toEntity(requestBody), Community.class).getBody();
+
+        return result;
+    }
+
+    public Community addCommunityCommunity(Integer community_id, Community requestBody) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/communities");
         Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
                 toEntity(requestBody), Community.class).getBody();
 
@@ -317,14 +502,32 @@ public class DSpaceRestClient {
     public Community[] getCommunityCommunities(Integer community_id, String expand, Integer limit, Integer offset, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("community_id", community_id);
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/communities")
-        .queryParam("expand", expand)
-        .queryParam("limit", limit)
-        .queryParam("offset", offset)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Community[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+                toEntity(null), Community[].class).getBody();
+
+        return result;
+    }
+
+    public Community[] getCommunityCommunities(Integer community_id, String expand, Integer limit, Integer offset) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/communities")
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset);
         Community[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), Community[].class).getBody();
 
@@ -334,11 +537,26 @@ public class DSpaceRestClient {
     public Collection addCommunityCollection(Integer community_id, String userIP, String userAgent, String xforwardedfor, Collection requestBody) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("community_id", community_id);
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/collections")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+                toEntity(requestBody), Collection.class).getBody();
+
+        return result;
+    }
+
+    public Collection addCommunityCollection(Integer community_id, Collection requestBody) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/collections");
         Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
                 toEntity(requestBody), Collection.class).getBody();
 
@@ -348,14 +566,32 @@ public class DSpaceRestClient {
     public Collection[] getCommunityCollections(Integer community_id, String expand, Integer limit, Integer offset, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("community_id", community_id);
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/collections")
-        .queryParam("expand", expand)
-        .queryParam("limit", limit)
-        .queryParam("offset", offset)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Collection[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+                toEntity(null), Collection[].class).getBody();
+
+        return result;
+    }
+
+    public Collection[] getCommunityCollections(Integer community_id, String expand, Integer limit, Integer offset) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/collections")
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset);
         Collection[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), Collection[].class).getBody();
 
@@ -364,12 +600,23 @@ public class DSpaceRestClient {
 
     public Community[] getTopCommunities(String expand, Integer limit, Integer offset, String userIP, String userAgent, String xforwardedfor) {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/top-communities")
-        .queryParam("expand", expand)
-        .queryParam("limit", limit)
-        .queryParam("offset", offset)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Community[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+                toEntity(null), Community[].class).getBody();
+
+        return result;
+    }
+
+    public Community[] getTopCommunities(String expand, Integer limit, Integer offset) {
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/top-communities")
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset);
         Community[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
                 toEntity(null), Community[].class).getBody();
 
@@ -379,12 +626,32 @@ public class DSpaceRestClient {
     public Void deleteCommunityCollection(Integer collection_id, Integer community_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("collection_id", collection_id);
-        uriVariables.put("community_id", community_id);
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/collections/{collection_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void deleteCommunityCollection(Integer collection_id, Integer community_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/collections/{collection_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
@@ -394,12 +661,32 @@ public class DSpaceRestClient {
     public Void deleteCommunityCommunity(Integer community_id, Integer community_id2, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("community_id", community_id);
-        uriVariables.put("community_id2", community_id2);
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
+        if (community_id2 != null) {
+            uriVariables.put("community_id2", community_id2);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/communities/{community_id2}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void deleteCommunityCommunity(Integer community_id, Integer community_id2) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (community_id != null) {
+            uriVariables.put("community_id", community_id);
+        }
+        if (community_id2 != null) {
+            uriVariables.put("community_id2", community_id2);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/communities/{community_id2}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
@@ -408,12 +695,23 @@ public class DSpaceRestClient {
 
     public Community[] getCommunities(String expand, Integer limit, Integer offset, String userIP, String userAgent, String xforwardedfor) {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities")
-        .queryParam("expand", expand)
-        .queryParam("limit", limit)
-        .queryParam("offset", offset)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Community[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+                toEntity(null), Community[].class).getBody();
+
+        return result;
+    }
+
+    public Community[] getCommunities(String expand, Integer limit, Integer offset) {
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities")
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset);
         Community[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
                 toEntity(null), Community[].class).getBody();
 
@@ -422,9 +720,17 @@ public class DSpaceRestClient {
 
     public Community createCommunity(String userIP, String userAgent, String xforwardedfor, Community requestBody) {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Community result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
+                toEntity(requestBody), Community.class).getBody();
+
+        return result;
+    }
+
+    public Community createCommunity(Community requestBody) {
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities");
         Community result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
                 toEntity(requestBody), Community.class).getBody();
 
@@ -434,11 +740,26 @@ public class DSpaceRestClient {
     public Void updateCollection(Integer collection_id, String userIP, String userAgent, String xforwardedfor, Collection requestBody) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("collection_id", collection_id);
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+                toEntity(requestBody), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void updateCollection(Integer collection_id, Collection requestBody) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
                 toEntity(requestBody), Void.class).getBody();
 
@@ -448,11 +769,26 @@ public class DSpaceRestClient {
     public Void deleteCollection(Integer collection_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("collection_id", collection_id);
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void deleteCollection(Integer collection_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
@@ -462,14 +798,32 @@ public class DSpaceRestClient {
     public Collection getCollection(Integer collection_id, String expand, Integer limit, Integer offset, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("collection_id", collection_id);
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}")
-        .queryParam("expand", expand)
-        .queryParam("limit", limit)
-        .queryParam("offset", offset)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+                toEntity(null), Collection.class).getBody();
+
+        return result;
+    }
+
+    public Collection getCollection(Integer collection_id, String expand, Integer limit, Integer offset) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}")
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset);
         Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), Collection.class).getBody();
 
@@ -479,12 +833,32 @@ public class DSpaceRestClient {
     public Void deleteCollectionItem(Integer collection_id, Integer item_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("collection_id", collection_id);
-        uriVariables.put("item_id", item_id);
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}/items/{item_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void deleteCollectionItem(Integer collection_id, Integer item_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}/items/{item_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
@@ -502,11 +876,26 @@ public class DSpaceRestClient {
     public Item addCollectionItem(Integer collection_id, String userIP, String userAgent, String xforwardedfor, Item requestBody) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("collection_id", collection_id);
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}/items")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+                toEntity(requestBody), Item.class).getBody();
+
+        return result;
+    }
+
+    public Item addCollectionItem(Integer collection_id, Item requestBody) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}/items");
         Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
                 toEntity(requestBody), Item.class).getBody();
 
@@ -516,14 +905,32 @@ public class DSpaceRestClient {
     public Item[] getCollectionItems(Integer collection_id, String expand, Integer limit, Integer offset, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("collection_id", collection_id);
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}/items")
-        .queryParam("expand", expand)
-        .queryParam("limit", limit)
-        .queryParam("offset", offset)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Item[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+                toEntity(null), Item[].class).getBody();
+
+        return result;
+    }
+
+    public Item[] getCollectionItems(Integer collection_id, String expand, Integer limit, Integer offset) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (collection_id != null) {
+            uriVariables.put("collection_id", collection_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}/items")
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset);
         Item[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), Item[].class).getBody();
 
@@ -532,12 +939,23 @@ public class DSpaceRestClient {
 
     public Collection[] getCollections(String expand, Integer limit, Integer offset, String userIP, String userAgent, String xforwardedfor) {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections")
-        .queryParam("expand", expand)
-        .queryParam("limit", limit)
-        .queryParam("offset", offset)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Collection[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+                toEntity(null), Collection[].class).getBody();
+
+        return result;
+    }
+
+    public Collection[] getCollections(String expand, Integer limit, Integer offset) {
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections")
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset);
         Collection[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
                 toEntity(null), Collection[].class).getBody();
 
@@ -547,10 +965,14 @@ public class DSpaceRestClient {
     public Object getObject(String prefix, String suffix, String expand) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("prefix", prefix);
-        uriVariables.put("suffix", suffix);
+        if (prefix != null) {
+            uriVariables.put("prefix", prefix);
+        }
+        if (suffix != null) {
+            uriVariables.put("suffix", suffix);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/handle/{prefix}/{suffix}")
-        .queryParam("expand", expand);
+                .queryParam("expand", expand);
         Object result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), Object.class).getBody();
 
@@ -618,12 +1040,28 @@ public class DSpaceRestClient {
     public Item getItem(Integer item_id, String expand, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("item_id", item_id);
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}")
-        .queryParam("expand", expand)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+                toEntity(null), Item.class).getBody();
+
+        return result;
+    }
+
+    public Item getItem(Integer item_id, String expand) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}")
+                .queryParam("expand", expand);
         Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), Item.class).getBody();
 
@@ -633,11 +1071,26 @@ public class DSpaceRestClient {
     public Void deleteItem(Integer item_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("item_id", item_id);
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void deleteItem(Integer item_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
@@ -647,11 +1100,26 @@ public class DSpaceRestClient {
     public Void updateItemMetadata(Integer item_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("item_id", item_id);
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void updateItemMetadata(Integer item_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
                 toEntity(null), Void.class).getBody();
 
@@ -661,11 +1129,26 @@ public class DSpaceRestClient {
     public Void addItemMetadata(Integer item_id, String userIP, String userAgent, String xforwardedfor, MetadataEntry requestBody) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("item_id", item_id);
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+                toEntity(requestBody), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void addItemMetadata(Integer item_id, MetadataEntry requestBody) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
                 toEntity(requestBody), Void.class).getBody();
 
@@ -675,11 +1158,26 @@ public class DSpaceRestClient {
     public Void deleteItemMetadata(Integer item_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("item_id", item_id);
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void deleteItemMetadata(Integer item_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
@@ -689,11 +1187,26 @@ public class DSpaceRestClient {
     public MetadataEntry getItemMetadata(Integer item_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("item_id", item_id);
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        MetadataEntry result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+                toEntity(null), MetadataEntry.class).getBody();
+
+        return result;
+    }
+
+    public MetadataEntry getItemMetadata(Integer item_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata");
         MetadataEntry result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), MetadataEntry.class).getBody();
 
@@ -703,13 +1216,30 @@ public class DSpaceRestClient {
     public Bitstream[] getItemBitstreams(Integer item_id, Integer limit, Integer offset, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("item_id", item_id);
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/bitstreams")
-        .queryParam("limit", limit)
-        .queryParam("offset", offset)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Bitstream[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+                toEntity(null), Bitstream[].class).getBody();
+
+        return result;
+    }
+
+    public Bitstream[] getItemBitstreams(Integer item_id, Integer limit, Integer offset) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/bitstreams")
+                .queryParam("limit", limit)
+                .queryParam("offset", offset);
         Bitstream[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
                 toEntity(null), Bitstream[].class).getBody();
 
@@ -719,17 +1249,38 @@ public class DSpaceRestClient {
     public Bitstream addItemBitstream(Integer item_id, String name, String description, Integer groupId, Integer year, Integer month, Integer day, String userIP, String userAgent, String xforwardedfor, InputStream requestBody) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("item_id", item_id);
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/bitstreams")
-        .queryParam("name", name)
-        .queryParam("description", description)
-        .queryParam("groupId", groupId)
-        .queryParam("year", year)
-        .queryParam("month", month)
-        .queryParam("day", day)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("name", name)
+                .queryParam("description", description)
+                .queryParam("groupId", groupId)
+                .queryParam("year", year)
+                .queryParam("month", month)
+                .queryParam("day", day)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+                toEntity(new InputStreamResource(requestBody)), Bitstream.class).getBody();
+
+        return result;
+    }
+
+    public Bitstream addItemBitstream(Integer item_id, String name, String description, Integer groupId, Integer year, Integer month, Integer day, InputStream requestBody) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/bitstreams")
+                .queryParam("name", name)
+                .queryParam("description", description)
+                .queryParam("groupId", groupId)
+                .queryParam("year", year)
+                .queryParam("month", month)
+                .queryParam("day", day);
         Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
                 toEntity(new InputStreamResource(requestBody)), Bitstream.class).getBody();
 
@@ -738,10 +1289,19 @@ public class DSpaceRestClient {
 
     public Item[] findItemsByMetadataField(String expand, String userIP, String userAgent, String xforwardedfor, MetadataEntry requestBody) {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/find-by-metadata-field")
-        .queryParam("expand", expand)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Item[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
+                toEntity(requestBody), Item[].class).getBody();
+
+        return result;
+    }
+
+    public Item[] findItemsByMetadataField(String expand, MetadataEntry requestBody) {
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/find-by-metadata-field")
+                .queryParam("expand", expand);
         Item[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
                 toEntity(requestBody), Item[].class).getBody();
 
@@ -751,12 +1311,32 @@ public class DSpaceRestClient {
     public Void deleteItemBitstream(Integer item_id, Integer bitstream_id, String userIP, String userAgent, String xforwardedfor) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
-        uriVariables.put("item_id", item_id);
-        uriVariables.put("bitstream_id", bitstream_id);
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/bitstreams/{bitstream_id}")
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+                toEntity(null), Void.class).getBody();
+
+        return result;
+    }
+
+    public Void deleteItemBitstream(Integer item_id, Integer bitstream_id) {
+
+        Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
+        if (item_id != null) {
+            uriVariables.put("item_id", item_id);
+        }
+        if (bitstream_id != null) {
+            uriVariables.put("bitstream_id", bitstream_id);
+        }
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/bitstreams/{bitstream_id}");
         Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
@@ -765,12 +1345,23 @@ public class DSpaceRestClient {
 
     public Item[] getItems(String expand, Integer limit, Integer offset, String userIP, String userAgent, String xforwardedfor) {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items")
-        .queryParam("expand", expand)
-        .queryParam("limit", limit)
-        .queryParam("offset", offset)
-        .queryParam("userIP", userIP)
-        .queryParam("userAgent", userAgent)
-        .queryParam("xforwardedfor", xforwardedfor);
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset)
+                .queryParam("userIP", userIP)
+                .queryParam("userAgent", userAgent)
+                .queryParam("xforwardedfor", xforwardedfor);
+        Item[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+                toEntity(null), Item[].class).getBody();
+
+        return result;
+    }
+
+    public Item[] getItems(String expand, Integer limit, Integer offset) {
+        UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items")
+                .queryParam("expand", expand)
+                .queryParam("limit", limit)
+                .queryParam("offset", offset);
         Item[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
                 toEntity(null), Item[].class).getBody();
 
