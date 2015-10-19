@@ -9,7 +9,10 @@ import javax.ws.rs.core.MultivaluedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Bitstreams;
+import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Collections;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Communities;
+import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Items;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Root;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientHandlerException;
@@ -54,6 +57,24 @@ public class DSpaceJerseyRestClient {
     public DSpaceJerseyRestClient(String baseUrl, Client client) {
         setBaseUrl(baseUrl);
         setClient(client);
+    }
+
+    /**
+     * Get the bitstreams resource.
+     * 
+     * @return the bitstreams resource.
+     */
+    public Bitstreams bitstreams() {
+        return DemoDspaceOrg_Rest.bitstreams(client, baseUri);
+    }
+
+    /**
+     * Get the collections resource.
+     * 
+     * @return the collections resource.
+     */
+    public Collections collections() {
+        return DemoDspaceOrg_Rest.collections(client, baseUri);
     }
 
     /**
@@ -119,6 +140,15 @@ public class DSpaceJerseyRestClient {
 
         });
         this.baseUri = new URI(baseUrl);
+    }
+
+    /**
+     * Get the items resource.
+     * 
+     * @return the items resource.
+     */
+    public Items items() {
+        return DemoDspaceOrg_Rest.items(client, baseUri);
     }
 
     public String loginJsonAs(User input) {
