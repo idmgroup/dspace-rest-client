@@ -1,20 +1,19 @@
 package com.idmgroup.dspace.rest;
 
-import static com.idmgroup.dspace.rest.jersey.JerseyTestUtils.user;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_ADMIN;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_BAD_PASSWORD;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_PASSWORD;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_URL;
+import static com.idmgroup.dspace.rest.jersey.JerseyTestUtils.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import com.idmgroup.dspace.rest.jersey.User;
 
 /**
  * Tests the REST client (Index).
@@ -26,6 +25,11 @@ public class TestDSpaceRestClientIndex {
     private DSpaceRestClient newClient(String url) {
         RestTemplate restTemplate = new RestTemplate();
         return new DSpaceRestClient(url, restTemplate);
+    }
+
+    @Before
+    public void setUp() {
+        TestUtils.trustAllSSL();
     }
 
     /**

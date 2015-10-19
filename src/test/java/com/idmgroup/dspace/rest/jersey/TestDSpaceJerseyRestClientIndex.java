@@ -11,8 +11,10 @@ import static org.junit.Assert.fail;
 
 import javax.ws.rs.WebApplicationException;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import com.idmgroup.dspace.rest.TestUtils;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -30,6 +32,11 @@ public class TestDSpaceJerseyRestClientIndex {
         DSpaceJerseyRestClient client = new DSpaceJerseyRestClient(url, cl);
         client.init();
         return client;
+    }
+
+    @Before
+    public void setUp() {
+        TestUtils.trustAllSSL();
     }
 
     /**

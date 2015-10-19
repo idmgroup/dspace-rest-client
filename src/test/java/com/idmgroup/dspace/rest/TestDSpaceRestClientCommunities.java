@@ -1,17 +1,16 @@
 package com.idmgroup.dspace.rest;
 
-import static com.idmgroup.dspace.rest.jersey.JerseyTestUtils.user;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_ADMIN;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_PASSWORD;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_URL;
 import static com.idmgroup.dspace.rest.TestConstants.TEST_COMMUNITY_NAME;
+import static com.idmgroup.dspace.rest.jersey.JerseyTestUtils.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.internal.matchers.Matches;
@@ -20,7 +19,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.idmgroup.dspace.rest.jersey.Community;
-import com.idmgroup.dspace.rest.jersey.User;
 
 public class TestDSpaceRestClientCommunities {
 
@@ -54,6 +52,7 @@ public class TestDSpaceRestClientCommunities {
 
     @Before
     public void setUp() {
+        TestUtils.trustAllSSL();
         clean();
     }
 

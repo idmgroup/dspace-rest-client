@@ -13,11 +13,11 @@ import static org.junit.Assert.fail;
 
 import javax.ws.rs.WebApplicationException;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.internal.matchers.Matches;
 
+import com.idmgroup.dspace.rest.TestUtils;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -63,6 +63,7 @@ public class TestDSpaceJerseyRestClientCommunities {
 
     @Before
     public void setUp() throws Exception {
+        TestUtils.trustAllSSL();
         clean();
     }
 
