@@ -1,6 +1,8 @@
 # dspace-rest-client
 Java REST Client for DSpace
 
+[![Build Status](https://travis-ci.org/idmgroup/dspace-rest-client.svg?branch=master)](https://travis-ci.org/idmgroup/dspace-rest-client)
+
 ## Description
 
 There are two clients:
