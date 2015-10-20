@@ -71,11 +71,11 @@ public class TestDSpaceRestClientCollections {
             Collection collection = new Collection();
             collection.setName(TEST_COLLECTION_NAME);
             Collection resultCol = client.addCommunityCollection(comId, collection);
-            final Integer colId = resultCol.getId();
             assertNotNull("created collection", resultCol);
             assertNotNull("created collection ID", resultCol.getId());
             assertTrue("created collection ID > 0", resultCol.getId() > 0);
             assertThat("created collection handle", resultCol.getHandle(), new Matches("[0-9]+/[0-9]+"));
+            final Integer colId = resultCol.getId();
 
             resultCol = client.getCollection(colId, null, 0, 0);
             assertEquals("get collection ID", colId, resultCol.getId());

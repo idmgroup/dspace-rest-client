@@ -77,11 +77,11 @@ public class TestDSpaceJerseyRestClientCollections {
             collection.setName(TEST_COLLECTION_NAME);
             Collection resultCol = client.communities().community_idCollections(comId)
                     .postJsonAsCollection(collection, null, null, null);
-            final Integer colId = resultCol.getId();
             assertNotNull("created collection", resultCol);
             assertNotNull("created collection ID", resultCol.getId());
             assertTrue("created collection ID > 0", resultCol.getId() > 0);
             assertThat("created collection handle", resultCol.getHandle(), new Matches("[0-9]+/[0-9]+"));
+            final Integer colId = resultCol.getId();
 
             resultCol = client.collections().collection_id(colId).getAsCollectionJson(null, 0, 0, null, null, null);
             assertEquals("get collection ID", colId, resultCol.getId());

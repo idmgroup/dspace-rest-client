@@ -54,7 +54,7 @@ public class TestDSpaceRestClientItems {
     private Bitstream createBitstream(DSpaceRestClient client, int itemId, String resourceName) {
         final String baseName = resourceName.replaceAll("^.*/([^/]+)$", "$1");
         InputStream content = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
-        Bitstream bitstream = client.addItemBitstream(itemId, baseName, null, null, 2015, 02, 17, content);
+        Bitstream bitstream = client.addItemBitstream(itemId, baseName, null, null, 2015, 2, 17, content);
         assertEquals("created bitstream name", baseName, bitstream.getName());
         assertEquals("created bitstream bundle", "ORIGINAL", bitstream.getBundleName());
         assertEquals("created bitstream format", "image/png", bitstream.getFormat());
@@ -90,11 +90,11 @@ public class TestDSpaceRestClientItems {
             Item item = new Item();
             item.setName("Logo IDM");
             Item resultItem = client.addCollectionItem(colId, item);
-            final Integer itemId = resultItem.getId();
             assertNotNull("created item", resultItem);
             assertNotNull("created item ID", resultItem.getId());
             assertTrue("created item ID > 0", resultItem.getId() > 0);
             assertThat("created item handle", resultItem.getHandle(), new Matches("[0-9]+/[0-9]+"));
+            final Integer itemId = resultItem.getId();
 
             resultItem = client.getItem(itemId, null);
             assertEquals("get item ID", itemId, resultItem.getId());

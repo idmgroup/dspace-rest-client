@@ -75,11 +75,11 @@ public class TestDSpaceJerseyRestClientCommunities {
             Community community = new Community();
             community.setName(TEST_COMMUNITY_NAME);
             Community result = client.communities().postJsonAsCommunity(community);
-            final Integer comId = result.getId();
             assertNotNull("created community", result);
             assertNotNull("created community ID", result.getId());
             assertTrue("created community ID > 0", result.getId() > 0);
             assertThat("created community handle", result.getHandle(), new Matches("[0-9]+/[0-9]+"));
+            final Integer comId = result.getId();
 
             result = client.communities().community_id(comId).getAsCommunityJson();
             assertEquals("get community ID", comId, result.getId());
