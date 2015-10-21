@@ -62,45 +62,42 @@ public class TestDSpaceRestClientCollections {
     public void testCreateUpdateDeleteCollection() {
         DSpaceRestClient client = newClient(DEMO_DSPACE_URL);
         client.login(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
+
+        Community community = new Community();
+        community.setName(TEST_COMMUNITY_NAME);
+        Community resultCom = client.createCommunity(community);
+        final Integer comId = resultCom.getId();
+
+        Collection collection = new Collection();
+        collection.setName(TEST_COLLECTION_NAME);
+        Collection resultCol = client.addCommunityCollection(comId, collection);
+        assertNotNull("created collection", resultCol);
+        assertNotNull("created collection ID", resultCol.getId());
+        assertTrue("created collection ID > 0", resultCol.getId() > 0);
+        assertThat("created collection handle", resultCol.getHandle(), new Matches("[0-9]+/[0-9]+"));
+        final Integer colId = resultCol.getId();
+
+        resultCol = client.getCollection(colId, null, 0, 0);
+        assertEquals("get collection ID", colId, resultCol.getId());
+        assertEquals("get collection name", TEST_COLLECTION_NAME, resultCol.getName());
+
+        resultCol.setShortDescription("A short description for Arno.db pictures");
+        client.updateCollection(colId, resultCol);
+
+        resultCol = client.getCollection(colId, null, 0, 0);
+        assertEquals("get2 collection ID", colId, resultCol.getId());
+        assertEquals("get2 collection name", TEST_COLLECTION_NAME, resultCol.getName());
+        assertEquals("get2 collection description", "A short description for Arno.db pictures",
+                resultCol.getShortDescription());
+
+        client.deleteCollection(colId);
         try {
-            Community community = new Community();
-            community.setName(TEST_COMMUNITY_NAME);
-            Community resultCom = client.createCommunity(community);
-            final Integer comId = resultCom.getId();
-
-            Collection collection = new Collection();
-            collection.setName(TEST_COLLECTION_NAME);
-            Collection resultCol = client.addCommunityCollection(comId, collection);
-            assertNotNull("created collection", resultCol);
-            assertNotNull("created collection ID", resultCol.getId());
-            assertTrue("created collection ID > 0", resultCol.getId() > 0);
-            assertThat("created collection handle", resultCol.getHandle(), new Matches("[0-9]+/[0-9]+"));
-            final Integer colId = resultCol.getId();
-
             resultCol = client.getCollection(colId, null, 0, 0);
-            assertEquals("get collection ID", colId, resultCol.getId());
-            assertEquals("get collection name", TEST_COLLECTION_NAME, resultCol.getName());
-
-            resultCol.setShortDescription("A short description for Arno.db pictures");
-            client.updateCollection(colId, resultCol);
-
-            resultCol = client.getCollection(colId, null, 0, 0);
-            assertEquals("get2 collection ID", colId, resultCol.getId());
-            assertEquals("get2 collection name", TEST_COLLECTION_NAME, resultCol.getName());
-            assertEquals("get2 collection description", "A short description for Arno.db pictures",
-                    resultCol.getShortDescription());
-
-            client.deleteCollection(colId);
-            try {
-                resultCol = client.getCollection(colId, null, 0, 0);
-                fail("Expected HttpClientErrorException to be thrown");
-            } catch (HttpClientErrorException e) {
-                assertEquals("HTTP status", HttpStatus.NOT_FOUND, e.getStatusCode());
-            }
-            client.deleteCommunity(comId);
-        } finally {
-            client.logout();
+            fail("Expected HttpClientErrorException to be thrown");
+        } catch (HttpClientErrorException e) {
+            assertEquals("HTTP status", HttpStatus.NOT_FOUND, e.getStatusCode());
         }
+        client.deleteCommunity(comId);
     }
 
 }

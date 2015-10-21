@@ -6,9 +6,6 @@ import java.net.URISyntaxException;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Bitstreams;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Collections;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Communities;
@@ -38,8 +35,6 @@ public class DSpaceJerseyRestClient {
     private Client client;
 
     private String dspaceToken;
-
-    private final Log logger = LogFactory.getLog(getClass());
 
     /**
      * New instance, unconfigured.
@@ -152,18 +147,6 @@ public class DSpaceJerseyRestClient {
     }
 
     public String loginJsonAs(User input) {
-        // Logout just in case.
-        if (dspaceToken != null) {
-            try {
-                logout();
-            } catch (Exception e) {
-                logger.error(e);
-            } finally {
-                dspaceToken = null;
-            }
-        }
-
-        // Login
         String result = this.root().login().postJsonAs(input, String.class);
         if (result == null || result.length() <= 0)
             result = null;
@@ -173,18 +156,6 @@ public class DSpaceJerseyRestClient {
     }
 
     public String loginXmlAs(User input) {
-        // Logout just in case.
-        if (dspaceToken != null) {
-            try {
-                logout();
-            } catch (Exception e) {
-                logger.error(e);
-            } finally {
-                dspaceToken = null;
-            }
-        }
-
-        // Login
         String result = this.root().login().postXmlAs(input, String.class);
         if (result == null || result.length() <= 0)
             result = null;

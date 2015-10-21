@@ -74,7 +74,8 @@ public class TestDSpaceRestClientIndex {
     /**
      * Tests the logout.
      */
-    @Test
+    // Don't test the logout as it is a global logout
+    // @Test
     public void testLogout() {
         DSpaceRestClient client = newClient(DEMO_DSPACE_URL);
         client.login(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));

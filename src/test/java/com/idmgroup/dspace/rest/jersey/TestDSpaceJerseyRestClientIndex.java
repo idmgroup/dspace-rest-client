@@ -89,7 +89,8 @@ public class TestDSpaceJerseyRestClientIndex {
      * 
      * @throws Exception
      */
-    @Test
+    // Don't test the logout as it is a global logout
+    // @Test
     public void testLogout() throws Exception {
         DSpaceJerseyRestClient client = newClient(DEMO_DSPACE_URL);
         client.loginJsonAs(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));

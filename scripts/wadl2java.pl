@@ -184,20 +184,6 @@ EOF
         my $pre_call_code = '';
         my $post_call_code = '';
         if ($method_name eq 'login') {
-            $pre_call_code = <<EOF
-        // Logout just in case.
-        if (dspaceToken != null) {
-            try {
-                logout();
-            } catch (Exception e) {
-                logger.error(e);
-            } finally {
-                dspaceToken = null;
-            }
-        }
-        // Login
-EOF
-            ;
             $post_call_code = <<EOF
         if (result == null || result.length() <= 0)
             result = null;

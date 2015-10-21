@@ -80,56 +80,53 @@ public class TestDSpaceJerseyRestClientItems {
     public void testCreateItemAndBitStreams() throws Exception {
         DSpaceJerseyRestClient client = newClient(DEMO_DSPACE_URL);
         client.loginJsonAs(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
+
+        Community community = new Community();
+        community.setName(TEST_COMMUNITY_NAME);
+        Community result = client.communities().postJsonAsCommunity(community);
+        final Integer comId = result.getId();
+
+        Collection collection = new Collection();
+        collection.setName(TEST_COLLECTION_NAME);
+        Collection resultCol = client.communities().community_idCollections(comId)
+                .postJsonAsCollection(collection, null, null, null);
+        final Integer colId = resultCol.getId();
+
+        Item item = new Item();
+        item.setName("Logo IDM");
+        Item resultItem = client.collections().collection_idItems(colId).postJsonAsItem(item);
+        assertNotNull("created item", resultItem);
+        assertNotNull("created item ID", resultItem.getId());
+        assertTrue("created item ID > 0", resultItem.getId() > 0);
+        assertThat("created item handle", resultItem.getHandle(), new Matches("[0-9]+/[0-9]+"));
+        final Integer itemId = resultItem.getId();
+
+        resultItem = client.items().item_id(itemId).getAsItemJson();
+        assertEquals("get item ID", itemId, resultItem.getId());
+        // XXX Well, I think I spotted a bug in DSpace REST API.
+        assertEquals("get item name", /* FIXME "Logo IDM" */null, resultItem.getName());
+
+        Bitstream bitstream;
+        bitstream = createBitstream(client, itemId, "com/idmgroup/brand/logo-idm_big_transparent_hd.png");
+        bitstream = createBitstream(client, itemId, "com/idmgroup/brand/logo-idm_small_transparent_hd.png");
+        bitstream = createBitstream(client, itemId, "com/idmgroup/brand/logo-idm_big_vertical_hd.png");
+        bitstream = createBitstream(client, itemId, "com/idmgroup/brand/logo-idm_small_vertical_hd.png");
+        final Integer bsId = bitstream.getId();
+        bitstream = client.bitstreams().bitstream_id(bsId).getAsBitstreamJson();
+        assertEquals("get bitstream ID", bsId, bitstream.getId());
+        assertEquals("get bitstream name", "logo-idm_small_vertical_hd.png", bitstream.getName());
+
+        client.bitstreams().bitstream_id(bsId).deleteAs(String.class);
         try {
-            Community community = new Community();
-            community.setName(TEST_COMMUNITY_NAME);
-            Community result = client.communities().postJsonAsCommunity(community);
-            final Integer comId = result.getId();
-
-            Collection collection = new Collection();
-            collection.setName(TEST_COLLECTION_NAME);
-            Collection resultCol = client.communities().community_idCollections(comId)
-                    .postJsonAsCollection(collection, null, null, null);
-            final Integer colId = resultCol.getId();
-
-            Item item = new Item();
-            item.setName("Logo IDM");
-            Item resultItem = client.collections().collection_idItems(colId).postJsonAsItem(item);
-            assertNotNull("created item", resultItem);
-            assertNotNull("created item ID", resultItem.getId());
-            assertTrue("created item ID > 0", resultItem.getId() > 0);
-            assertThat("created item handle", resultItem.getHandle(), new Matches("[0-9]+/[0-9]+"));
-            final Integer itemId = resultItem.getId();
-
-            resultItem = client.items().item_id(itemId).getAsItemJson();
-            assertEquals("get item ID", itemId, resultItem.getId());
-            // XXX Well, I think I spotted a bug in DSpace REST API.
-            assertEquals("get item name", /* FIXME "Logo IDM" */null, resultItem.getName());
-
-            Bitstream bitstream;
-            bitstream = createBitstream(client, itemId, "com/idmgroup/brand/logo-idm_big_transparent_hd.png");
-            bitstream = createBitstream(client, itemId, "com/idmgroup/brand/logo-idm_small_transparent_hd.png");
-            bitstream = createBitstream(client, itemId, "com/idmgroup/brand/logo-idm_big_vertical_hd.png");
-            bitstream = createBitstream(client, itemId, "com/idmgroup/brand/logo-idm_small_vertical_hd.png");
-            final Integer bsId = bitstream.getId();
             bitstream = client.bitstreams().bitstream_id(bsId).getAsBitstreamJson();
-            assertEquals("get bitstream ID", bsId, bitstream.getId());
-            assertEquals("get bitstream name", "logo-idm_small_vertical_hd.png", bitstream.getName());
-
-            client.bitstreams().bitstream_id(bsId).deleteAs(String.class);
-            try {
-                bitstream = client.bitstreams().bitstream_id(bsId).getAsBitstreamJson();
-                fail("Expected WebApplicationException to be thrown");
-            } catch (WebApplicationException e) {
-                assertEquals("HTTP status", 404, e.getResponse().getStatus());
-            }
-            // The other bitstreams will be deleted with the item.
-            client.collections().collection_idItemsItem_id(colId, itemId).deleteAs(String.class);
-            client.collections().collection_id(colId).deleteAs(String.class);
-            client.communities().community_id(comId).deleteAs(String.class);
-        } finally {
-            client.logout();
+            fail("Expected WebApplicationException to be thrown");
+        } catch (WebApplicationException e) {
+            assertEquals("HTTP status", 404, e.getResponse().getStatus());
         }
+        // The other bitstreams will be deleted with the item.
+        client.collections().collection_idItemsItem_id(colId, itemId).deleteAs(String.class);
+        client.collections().collection_id(colId).deleteAs(String.class);
+        client.communities().community_id(comId).deleteAs(String.class);
     }
 
 }
