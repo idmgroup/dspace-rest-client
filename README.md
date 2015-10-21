@@ -1,7 +1,9 @@
 # dspace-rest-client
-Java REST Client for DSpace
 
-[![Build Status](https://travis-ci.org/idmgroup/dspace-rest-client.svg?branch=master)](https://travis-ci.org/idmgroup/dspace-rest-client)
+
+[![Build Status](https://travis-ci.org/idmgroup/dspace-rest-client.svg?branch=master)](https://travis-ci.org/idmgroup/dspace-rest-client) [![Coverage Status](https://coveralls.io/repos/idmgroup/dspace-rest-client/badge.svg?branch=master&service=github)](https://coveralls.io/github/idmgroup/dspace-rest-client?branch=master)
+
+Java REST Client for DSpace
 
 ## Description
 
