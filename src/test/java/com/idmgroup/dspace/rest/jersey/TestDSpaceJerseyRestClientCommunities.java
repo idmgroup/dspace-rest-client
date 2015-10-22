@@ -44,12 +44,13 @@ public class TestDSpaceJerseyRestClientCommunities {
                 for (Community com : slice) {
                     if (communityName.equals(com.getName())) {
                         client.communities().community_id(com.getId()).deleteAs(String.class);
+                    } else {
+                        ++offset;
                     }
                 }
             } else {
                 break;
             }
-            offset += 20;
         }
     }
 

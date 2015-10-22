@@ -38,12 +38,13 @@ public class TestDSpaceRestClientCollections {
                 for (Community com : slice) {
                     if (communityName.equals(com.getName())) {
                         client.deleteCommunity(com.getId());
+                    } else {
+                        ++offset;
                     }
                 }
             } else {
                 break;
             }
-            offset += 20;
         }
     }
 
