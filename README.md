@@ -21,6 +21,13 @@ Both are dealing with the authentication token automatically.
 
 The Spring dependency is set to Spring 4.2 but the code has been successfuly tested with Spring 3.2.
 
+## Versioning
+
+The versioning of the client reflects the versioning of the DSpace repository. The current master
+branch supports version 5_x of the API. On the short term a dspace-5_x branch will be created for
+the 5_x support and master will be dedicated to DSpace master, i.e. 6_x. The version number contains
+a additional maintenance number.
+
 ## Build hints
 
 ### Update WADL
