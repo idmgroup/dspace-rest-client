@@ -110,17 +110,29 @@
                 <configuration>
                     <format>xml</format>
                     <aggregate>true</aggregate>
+                    <instrumentation>
+                        <excludes>
+                            <exclude>com/idmgroup/dspace/rest/jersey/Action.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/Bitstream.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/CheckSum.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/Collection.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/Community.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/DemoDspaceOrg_Rest*.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/DSpaceObject.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/Item.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/MetadataEntry.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/ObjectFactory.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/ResourcePolicy.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/Status.class</exclude>
+                            <exclude>com/idmgroup/dspace/rest/jersey/User.class</exclude>
+                        </excludes>
+                    </instrumentation>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.0.0</version>
-                <configuration>
-                    <sourceDirectories>
-                        <sourceDirectory>${project.build.directory}/generated-sources/wadl</sourceDirectory>
-                    </sourceDirectories>
-                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
