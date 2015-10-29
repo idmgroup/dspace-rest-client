@@ -36,6 +36,8 @@ public class DSpaceJerseyRestClient {
 
     private String dspaceToken;
 
+    private final ObjectFactory objectFactory = new ObjectFactory();
+
     /**
      * New instance, unconfigured.
      */
@@ -156,8 +158,8 @@ public class DSpaceJerseyRestClient {
         return DemoDspaceOrg_Rest.items(client, baseUri);
     }
 
-    public String loginJsonAs(User input) {
-        String result = this.root().login().postJsonAs(input, String.class);
+    public String loginJsonAsUser(User input) {
+        String result = this.root().login().postJsonAs(objectFactory.createUser(input), String.class);
         if (result == null || result.length() <= 0)
             result = null;
         dspaceToken = result;
@@ -165,8 +167,8 @@ public class DSpaceJerseyRestClient {
         return result;
     }
 
-    public String loginXmlAs(User input) {
-        String result = this.root().login().postXmlAs(input, String.class);
+    public String loginXmlAsUser(User input) {
+        String result = this.root().login().postXmlAs(objectFactory.createUser(input), String.class);
         if (result == null || result.length() <= 0)
             result = null;
         dspaceToken = result;

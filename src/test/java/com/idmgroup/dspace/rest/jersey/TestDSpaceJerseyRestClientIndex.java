@@ -73,8 +73,12 @@ public class TestDSpaceJerseyRestClientIndex {
     @Test
     public void testLogin() throws Exception {
         DSpaceJerseyRestClient client = newClient(DEMO_DSPACE_URL);
-        String token = client.loginJsonAs(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
+        String token = client.loginJsonAsUser(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
         assertTrue("dspace token format", token.matches("[-0-9A-Fa-f]+"));
+        // Code coverage
+        String token2 = client.loginXmlAsUser(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
+        // Apparently the same token is returned, we'll be informed if that changes...
+        assertEquals("dspace token 2", token, token2);
     }
 
     /**
@@ -86,7 +90,7 @@ public class TestDSpaceJerseyRestClientIndex {
     public void testLoginFail() throws Exception {
         DSpaceJerseyRestClient client = newClient(DEMO_DSPACE_URL);
         try {
-            client.loginJsonAs(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_BAD_PASSWORD));
+            client.loginJsonAsUser(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_BAD_PASSWORD));
             fail("Expected WebApplicationException to be thrown");
         } catch (WebApplicationException e) {
             assertEquals("HTTP status", 403, e.getResponse().getStatus());
@@ -102,7 +106,7 @@ public class TestDSpaceJerseyRestClientIndex {
     // @Test
     public void testLogout() throws Exception {
         DSpaceJerseyRestClient client = newClient(DEMO_DSPACE_URL);
-        client.loginJsonAs(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
+        client.loginJsonAsUser(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
         client.logout();
     }
 

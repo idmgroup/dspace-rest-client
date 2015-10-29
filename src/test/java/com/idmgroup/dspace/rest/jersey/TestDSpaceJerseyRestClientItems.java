@@ -27,7 +27,7 @@ public class TestDSpaceJerseyRestClientItems {
 
     private void clean() throws Exception {
         DSpaceJerseyRestClient client = newClient(DEMO_DSPACE_URL);
-        client.loginJsonAs(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
+        client.loginJsonAsUser(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
         cleanCommunitiesByName(client, TEST_COMMUNITY_NAME);
     }
 
@@ -87,7 +87,7 @@ public class TestDSpaceJerseyRestClientItems {
     @Test
     public void testCreateItemAndBitStreams() throws Exception {
         DSpaceJerseyRestClient client = newClient(DEMO_DSPACE_URL);
-        client.loginJsonAs(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
+        client.loginJsonAsUser(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
 
         Community community = new Community();
         community.setName(TEST_COMMUNITY_NAME);
