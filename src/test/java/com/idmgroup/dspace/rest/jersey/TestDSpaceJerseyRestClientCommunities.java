@@ -4,6 +4,7 @@ import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_ADMIN;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_PASSWORD;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_URL;
 import static com.idmgroup.dspace.rest.TestConstants.TEST_COMMUNITY_NAME;
+import static com.idmgroup.dspace.rest.TestConstants.TEST_UNICODE;
 import static com.idmgroup.dspace.rest.jersey.JerseyTestUtils.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -86,13 +87,21 @@ public class TestDSpaceJerseyRestClientCommunities {
         assertEquals("get community ID", comId, result.getId());
         assertEquals("get community name", TEST_COMMUNITY_NAME, result.getName());
 
-        result.setShortDescription("A short description for Arno.db");
+        result.setCopyrightText("Copyright with unicode " + TEST_UNICODE);
+        result.setIntroductoryText("An introductory text with unicode " + TEST_UNICODE);
+        result.setShortDescription("A short description for Arno.db with unicode " + TEST_UNICODE);
+        result.setSidebarText("Sidebar text with unicode " + TEST_UNICODE);
         client.communities().community_id(comId).putJsonAs(result, String.class);
 
         result = client.communities().community_id(comId).getAsCommunityJson();
         assertEquals("get2 community ID", comId, result.getId());
         assertEquals("get2 community name", TEST_COMMUNITY_NAME, result.getName());
-        assertEquals("get2 community description", "A short description for Arno.db", result.getShortDescription());
+        assertEquals("get2 community copyright", "Copyright with unicode " + TEST_UNICODE, result.getCopyrightText());
+        assertEquals("get2 community introduction", "An introductory text with unicode " + TEST_UNICODE,
+                result.getIntroductoryText());
+        assertEquals("get2 community description", "A short description for Arno.db with unicode " + TEST_UNICODE,
+                result.getShortDescription());
+        assertEquals("get2 community sidebar", "Sidebar text with unicode " + TEST_UNICODE, result.getSidebarText());
 
         client.communities().community_id(comId).deleteAs(String.class);
         try {

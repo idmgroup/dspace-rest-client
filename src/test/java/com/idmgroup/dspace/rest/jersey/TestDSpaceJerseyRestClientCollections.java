@@ -5,6 +5,7 @@ import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_PASSWORD;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_URL;
 import static com.idmgroup.dspace.rest.TestConstants.TEST_COLLECTION_NAME;
 import static com.idmgroup.dspace.rest.TestConstants.TEST_COMMUNITY_NAME;
+import static com.idmgroup.dspace.rest.TestConstants.TEST_UNICODE;
 import static com.idmgroup.dspace.rest.jersey.JerseyTestUtils.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -88,14 +89,23 @@ public class TestDSpaceJerseyRestClientCollections {
         assertEquals("get collection ID", colId, resultCol.getId());
         assertEquals("get collection name", TEST_COLLECTION_NAME, resultCol.getName());
 
-        resultCol.setShortDescription("A short description for Arno.db pictures");
+        resultCol.setCopyrightText("Copyright for pictures with unicode " + TEST_UNICODE);
+        resultCol.setIntroductoryText("An introductory text for pictures with unicode " + TEST_UNICODE);
+        resultCol.setShortDescription("A short description for Arno.db pictures with unicode " + TEST_UNICODE);
+        resultCol.setSidebarText("Sidebar text for pictures with unicode " + TEST_UNICODE);
         client.collections().collection_id(colId).putJsonAs(resultCol, String.class);
 
         resultCol = client.collections().collection_id(colId).getAsCollectionJson(null, 0, 0, null, null, null);
         assertEquals("get2 collection ID", colId, resultCol.getId());
         assertEquals("get2 collection name", TEST_COLLECTION_NAME, resultCol.getName());
-        assertEquals("get2 collection description", "A short description for Arno.db pictures",
-                resultCol.getShortDescription());
+        assertEquals("get2 collection copyright", "Copyright for pictures with unicode " + TEST_UNICODE,
+                resultCol.getCopyrightText());
+        assertEquals("get2 collection introduction", "An introductory text for pictures with unicode " + TEST_UNICODE,
+                resultCol.getIntroductoryText());
+        assertEquals("get2 collection description", "A short description for Arno.db pictures with unicode "
+                + TEST_UNICODE, resultCol.getShortDescription());
+        assertEquals("get2 collection sidebar", "Sidebar text for pictures with unicode " + TEST_UNICODE,
+                resultCol.getSidebarText());
 
         client.collections().collection_id(colId).deleteAs(String.class);
         try {

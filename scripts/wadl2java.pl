@@ -205,7 +205,8 @@ EOF
     public $return_type $method_name($params_str) {
         try {
 $pre_call_code$pre_call_code2$overl->{url_code}
-            $return_type result = restTemplate.exchange(queryBuilder.$build_code.toUri(), HttpMethod.$method_verb,
+            // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+            $return_type result = restTemplate.exchange(queryBuilder.$build_code.toUriString(), HttpMethod.$method_verb,
                     $request_entity, $return_type.class).getBody();
 $post_call_code
             return result;
@@ -220,7 +221,8 @@ EOF
                 print <<EOF
     public $return_type $method_name($params_str) {
 $pre_call_code$pre_call_code2$overl->{url_code}
-        $return_type result = restTemplate.exchange(queryBuilder.$build_code.toUri(), HttpMethod.$method_verb,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        $return_type result = restTemplate.exchange(queryBuilder.$build_code.toUriString(), HttpMethod.$method_verb,
                 $request_entity, $return_type.class).getBody();
 $post_call_code
         return result;

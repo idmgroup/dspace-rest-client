@@ -5,6 +5,7 @@ import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_PASSWORD;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_URL;
 import static com.idmgroup.dspace.rest.TestConstants.TEST_COLLECTION_NAME;
 import static com.idmgroup.dspace.rest.TestConstants.TEST_COMMUNITY_NAME;
+import static com.idmgroup.dspace.rest.TestConstants.TEST_UNICODE;
 import static com.idmgroup.dspace.rest.jersey.JerseyTestUtils.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -56,10 +57,20 @@ public class TestDSpaceJerseyRestClientItems {
         final String baseName = resourceName.replaceAll("^.*/([^/]+)$", "$1");
         InputStream content = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
         Bitstream bitstream = client.items().item_idBitstreams(itemId)
-                .post(content, baseName, null, null, 2015, 2, 17, null, null, null, Bitstream.class);
+                .post(content, baseName, TEST_UNICODE, null, 2015, 2, 17, null, null, null, Bitstream.class);
         assertEquals("created bitstream name", baseName, bitstream.getName());
         assertEquals("created bitstream bundle", "ORIGINAL", bitstream.getBundleName());
-        assertEquals("created bitstream format", "image/png", bitstream.getFormat());
+        if (baseName.endsWith(".png")) {
+            assertEquals("created bitstream MIME type", "image/png", bitstream.getMimeType());
+            assertEquals("created bitstream format", "image/png", bitstream.getFormat());
+        } else if (baseName.endsWith(".txt")) {
+            assertEquals("created bitstream MIME type", "text/plain", bitstream.getMimeType());
+            assertEquals("created bitstream format", "Text", bitstream.getFormat());
+        } else {
+            // I just don't know
+            assertEquals("created bitstream MIME type", "application/octet-stream", bitstream.getMimeType());
+            assertEquals("created bitstream format", "application/octet-stream", bitstream.getFormat());
+        }
         return bitstream;
     }
 
@@ -116,6 +127,19 @@ public class TestDSpaceJerseyRestClientItems {
         bitstream = client.bitstreams().bitstream_id(bsId).getAsBitstreamJson();
         assertEquals("get bitstream ID", bsId, bitstream.getId());
         assertEquals("get bitstream name", "logo-idm_small_vertical_hd.png", bitstream.getName());
+        assertEquals("get bitstream description", TEST_UNICODE, bitstream.getDescription());
+
+        bitstream = createBitstream(client, itemId, "com/idmgroup/text/ISO-8859-15.txt");
+        final Integer isoId = bitstream.getId();
+        bitstream = createBitstream(client, itemId, "com/idmgroup/text/UTF-8.txt");
+        final Integer utfId = bitstream.getId();
+
+        byte[] iso = client.bitstreams().bitstream_idRetrieve(isoId).getAs(byte[].class);
+        // "Du caf. dans une cafeti.re!" plus LF
+        assertEquals("ISO-8859-15 length", 27 + 1, iso.length);
+        byte[] utf = client.bitstreams().bitstream_idRetrieve(utfId).getAs(byte[].class);
+        // 5 chinese characters plus LF
+        assertEquals("UTF-8 length", 5 * 3 + 1, utf.length);
 
         client.bitstreams().bitstream_id(bsId).deleteAs(String.class);
         try {

@@ -14,4 +14,6 @@ public class TestConstants {
 
     public static final String TEST_COMMUNITY_NAME = "Arno.db test";
 
+    public static final String TEST_UNICODE = "\u6211\u662f\u4e2d\u56fd\u4eba";
+
 }

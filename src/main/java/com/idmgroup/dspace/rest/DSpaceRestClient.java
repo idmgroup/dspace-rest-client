@@ -138,7 +138,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        byte[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        byte[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), byte[].class).getBody();
 
         return result;
@@ -151,7 +152,8 @@ public class DSpaceRestClient {
             uriVariables.put("bitstream_id", bitstream_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/retrieve");
-        byte[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        byte[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), byte[].class).getBody();
 
         return result;
@@ -167,7 +169,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Void.class).getBody();
 
         return result;
@@ -180,7 +183,8 @@ public class DSpaceRestClient {
             uriVariables.put("bitstream_id", bitstream_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/policy");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Void.class).getBody();
 
         return result;
@@ -193,7 +197,8 @@ public class DSpaceRestClient {
             uriVariables.put("bitstream_id", bitstream_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/policy");
-        ResourcePolicy[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        ResourcePolicy[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), ResourcePolicy[].class).getBody();
 
         return result;
@@ -209,7 +214,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.PUT,
                 toEntity(requestBody), Void.class).getBody();
 
         return result;
@@ -222,7 +228,8 @@ public class DSpaceRestClient {
             uriVariables.put("bitstream_id", bitstream_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.PUT,
                 toEntity(requestBody), Void.class).getBody();
 
         return result;
@@ -238,7 +245,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -251,7 +259,8 @@ public class DSpaceRestClient {
             uriVariables.put("bitstream_id", bitstream_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -268,7 +277,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Bitstream.class).getBody();
 
         return result;
@@ -282,7 +292,8 @@ public class DSpaceRestClient {
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}")
                 .queryParam("expand", expand);
-        Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Bitstream.class).getBody();
 
         return result;
@@ -298,7 +309,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.PUT,
                 toEntity(new InputStreamResource(requestBody)), Void.class).getBody();
 
         return result;
@@ -311,7 +323,8 @@ public class DSpaceRestClient {
             uriVariables.put("bitstream_id", bitstream_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/data");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.PUT,
                 toEntity(new InputStreamResource(requestBody)), Void.class).getBody();
 
         return result;
@@ -330,7 +343,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -346,7 +360,8 @@ public class DSpaceRestClient {
             uriVariables.put("bitstream_id", bitstream_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/bitstreams/{bitstream_id}/policy/{policy_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -360,7 +375,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Bitstream[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Bitstream[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Bitstream[].class).getBody();
 
         return result;
@@ -371,7 +387,8 @@ public class DSpaceRestClient {
                 .queryParam("expand", expand)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset);
-        Bitstream[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Bitstream[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Bitstream[].class).getBody();
 
         return result;
@@ -387,7 +404,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.PUT,
                 toEntity(requestBody), Void.class).getBody();
 
         return result;
@@ -400,7 +418,8 @@ public class DSpaceRestClient {
             uriVariables.put("community_id", community_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.PUT,
                 toEntity(requestBody), Void.class).getBody();
 
         return result;
@@ -417,7 +436,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Community.class).getBody();
 
         return result;
@@ -431,7 +451,8 @@ public class DSpaceRestClient {
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}")
                 .queryParam("expand", expand);
-        Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Community.class).getBody();
 
         return result;
@@ -447,7 +468,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -460,7 +482,8 @@ public class DSpaceRestClient {
             uriVariables.put("community_id", community_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -476,7 +499,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Community.class).getBody();
 
         return result;
@@ -489,7 +513,8 @@ public class DSpaceRestClient {
             uriVariables.put("community_id", community_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/communities");
-        Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Community.class).getBody();
 
         return result;
@@ -508,7 +533,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Community[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Community[].class).getBody();
 
         return result;
@@ -524,7 +550,8 @@ public class DSpaceRestClient {
                 .queryParam("expand", expand)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset);
-        Community[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Community[].class).getBody();
 
         return result;
@@ -540,7 +567,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Collection.class).getBody();
 
         return result;
@@ -553,7 +581,8 @@ public class DSpaceRestClient {
             uriVariables.put("community_id", community_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/collections");
-        Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Collection.class).getBody();
 
         return result;
@@ -572,7 +601,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Collection[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Collection[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Collection[].class).getBody();
 
         return result;
@@ -588,7 +618,8 @@ public class DSpaceRestClient {
                 .queryParam("expand", expand)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset);
-        Collection[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Collection[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Collection[].class).getBody();
 
         return result;
@@ -602,7 +633,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Community[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Community[].class).getBody();
 
         return result;
@@ -613,7 +645,8 @@ public class DSpaceRestClient {
                 .queryParam("expand", expand)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset);
-        Community[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Community[].class).getBody();
 
         return result;
@@ -632,7 +665,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -648,7 +682,8 @@ public class DSpaceRestClient {
             uriVariables.put("community_id", community_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/collections/{collection_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -667,7 +702,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -683,7 +719,8 @@ public class DSpaceRestClient {
             uriVariables.put("community_id2", community_id2);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities/{community_id}/communities/{community_id2}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -697,7 +734,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Community[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Community[].class).getBody();
 
         return result;
@@ -708,7 +746,8 @@ public class DSpaceRestClient {
                 .queryParam("expand", expand)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset);
-        Community[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Community[].class).getBody();
 
         return result;
@@ -719,7 +758,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Community result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Community.class).getBody();
 
         return result;
@@ -727,7 +767,8 @@ public class DSpaceRestClient {
 
     public Community createCommunity(Community requestBody) {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/communities");
-        Community result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Community result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Community.class).getBody();
 
         return result;
@@ -743,7 +784,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.PUT,
                 toEntity(requestBody), Void.class).getBody();
 
         return result;
@@ -756,7 +798,8 @@ public class DSpaceRestClient {
             uriVariables.put("collection_id", collection_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.PUT,
                 toEntity(requestBody), Void.class).getBody();
 
         return result;
@@ -772,7 +815,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -785,7 +829,8 @@ public class DSpaceRestClient {
             uriVariables.put("collection_id", collection_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -804,7 +849,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Collection.class).getBody();
 
         return result;
@@ -820,7 +866,8 @@ public class DSpaceRestClient {
                 .queryParam("expand", expand)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset);
-        Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Collection result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Collection.class).getBody();
 
         return result;
@@ -839,7 +886,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -855,7 +903,8 @@ public class DSpaceRestClient {
             uriVariables.put("item_id", item_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}/items/{item_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -863,7 +912,8 @@ public class DSpaceRestClient {
 
     public Collection findCollectionByName() {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/find-collection");
-        Collection result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Collection result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.POST,
                 toEntity(null), Collection.class).getBody();
 
         return result;
@@ -879,7 +929,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Item.class).getBody();
 
         return result;
@@ -892,7 +943,8 @@ public class DSpaceRestClient {
             uriVariables.put("collection_id", collection_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/collections/{collection_id}/items");
-        Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Item.class).getBody();
 
         return result;
@@ -911,7 +963,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Item[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Item[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Item[].class).getBody();
 
         return result;
@@ -927,7 +980,8 @@ public class DSpaceRestClient {
                 .queryParam("expand", expand)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset);
-        Item[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Item[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Item[].class).getBody();
 
         return result;
@@ -941,7 +995,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Collection[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Collection[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Collection[].class).getBody();
 
         return result;
@@ -952,7 +1007,8 @@ public class DSpaceRestClient {
                 .queryParam("expand", expand)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset);
-        Collection[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Collection[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Collection[].class).getBody();
 
         return result;
@@ -969,7 +1025,8 @@ public class DSpaceRestClient {
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/handle/{prefix}/{suffix}")
                 .queryParam("expand", expand);
-        Object result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Object result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Object.class).getBody();
 
         return result;
@@ -977,7 +1034,8 @@ public class DSpaceRestClient {
 
     public String test() {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/test");
-        String result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        String result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), String.class).getBody();
 
         return result;
@@ -985,7 +1043,8 @@ public class DSpaceRestClient {
 
     public Status status() {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/status");
-        Status result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Status result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Status.class).getBody();
 
         return result;
@@ -993,7 +1052,8 @@ public class DSpaceRestClient {
 
     public String login(User requestBody) {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/login");
-        String result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        String result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.POST,
                 toEntity(requestBody), String.class).getBody();
         if (result == null || result.length() <= 0)
             result = null;
@@ -1005,7 +1065,8 @@ public class DSpaceRestClient {
     public Void logout() {
         try {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/logout");
-            Void result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
+            // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+            Void result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.POST,
                     toEntity(null), Void.class).getBody();
 
             return result;
@@ -1016,7 +1077,8 @@ public class DSpaceRestClient {
 
     public String sayHtmlHello() {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/");
-        String result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        String result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), String.class).getBody();
 
         return result;
@@ -1033,7 +1095,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Item.class).getBody();
 
         return result;
@@ -1047,7 +1110,8 @@ public class DSpaceRestClient {
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}")
                 .queryParam("expand", expand);
-        Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Item result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Item.class).getBody();
 
         return result;
@@ -1063,7 +1127,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -1076,7 +1141,8 @@ public class DSpaceRestClient {
             uriVariables.put("item_id", item_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -1092,7 +1158,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.PUT,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -1105,7 +1172,8 @@ public class DSpaceRestClient {
             uriVariables.put("item_id", item_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.PUT,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.PUT,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -1121,7 +1189,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Void.class).getBody();
 
         return result;
@@ -1134,7 +1203,8 @@ public class DSpaceRestClient {
             uriVariables.put("item_id", item_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Void.class).getBody();
 
         return result;
@@ -1150,7 +1220,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -1163,7 +1234,8 @@ public class DSpaceRestClient {
             uriVariables.put("item_id", item_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -1179,7 +1251,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        MetadataEntry result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        MetadataEntry result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), MetadataEntry.class).getBody();
 
         return result;
@@ -1192,7 +1265,8 @@ public class DSpaceRestClient {
             uriVariables.put("item_id", item_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/metadata");
-        MetadataEntry result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        MetadataEntry result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), MetadataEntry.class).getBody();
 
         return result;
@@ -1210,7 +1284,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Bitstream[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Bitstream[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Bitstream[].class).getBody();
 
         return result;
@@ -1225,7 +1300,8 @@ public class DSpaceRestClient {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/bitstreams")
                 .queryParam("limit", limit)
                 .queryParam("offset", offset);
-        Bitstream[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Bitstream[] result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
                 toEntity(null), Bitstream[].class).getBody();
 
         return result;
@@ -1247,7 +1323,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(new InputStreamResource(requestBody)), Bitstream.class).getBody();
 
         return result;
@@ -1266,7 +1343,8 @@ public class DSpaceRestClient {
                 .queryParam("year", year)
                 .queryParam("month", month)
                 .queryParam("day", day);
-        Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Bitstream result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.POST,
                 toEntity(new InputStreamResource(requestBody)), Bitstream.class).getBody();
 
         return result;
@@ -1278,7 +1356,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Item[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Item[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Item[].class).getBody();
 
         return result;
@@ -1287,7 +1366,8 @@ public class DSpaceRestClient {
     public Item[] findItemsByMetadataField(String expand, MetadataEntry requestBody) {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/find-by-metadata-field")
                 .queryParam("expand", expand);
-        Item[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.POST,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Item[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.POST,
                 toEntity(requestBody), Item[].class).getBody();
 
         return result;
@@ -1306,7 +1386,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -1322,7 +1403,8 @@ public class DSpaceRestClient {
             uriVariables.put("bitstream_id", bitstream_id);
         }
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/items/{item_id}/bitstreams/{bitstream_id}");
-        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUri(), HttpMethod.DELETE,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Void result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.DELETE,
                 toEntity(null), Void.class).getBody();
 
         return result;
@@ -1336,7 +1418,8 @@ public class DSpaceRestClient {
                 .queryParam("userIP", userIP)
                 .queryParam("userAgent", userAgent)
                 .queryParam("xforwardedfor", xforwardedfor);
-        Item[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Item[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Item[].class).getBody();
 
         return result;
@@ -1347,7 +1430,8 @@ public class DSpaceRestClient {
                 .queryParam("expand", expand)
                 .queryParam("limit", limit)
                 .queryParam("offset", offset);
-        Item[] result = restTemplate.exchange(queryBuilder.build().toUri(), HttpMethod.GET,
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        Item[] result = restTemplate.exchange(queryBuilder.build().toUriString(), HttpMethod.GET,
                 toEntity(null), Item[].class).getBody();
 
         return result;
