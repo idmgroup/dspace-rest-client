@@ -43,6 +43,16 @@ public class DSpaceJerseyRestClient {
     }
 
     /**
+     * New instance with a base URL.
+     * 
+     * @param baseUrl
+     *            the base URL of the DSpace REST API, e.g. "https://demo.dspace.org/rest".
+     */
+    public DSpaceJerseyRestClient(String baseUrl) {
+        this(baseUrl, null);
+    }
+
+    /**
      * New instance with a base URL and a configured {@link Client} instance.
      * 
      * @param baseUrl

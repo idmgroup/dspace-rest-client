@@ -48,8 +48,12 @@ public class TestDSpaceRestClientCommunities {
     }
 
     private DSpaceRestClient newClient(String url) {
+        // Default ctor and setters for code coverage
         RestTemplate restTemplate = new RestTemplate();
-        return new DSpaceRestClient(url, restTemplate);
+        DSpaceRestClient client = new DSpaceRestClient();
+        client.setBaseUrl(url);
+        client.setRestTemplate(restTemplate);
+        return client;
     }
 
     @Before

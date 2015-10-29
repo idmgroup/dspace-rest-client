@@ -32,6 +32,18 @@ public class TestDSpaceRestClientIndex {
         TestUtils.trustAllSSL();
     }
 
+         /**
+     * Code coverage.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testConstruction() throws Exception {
+        RestTemplate restTemplate = new RestTemplate();
+        DSpaceRestClient client = new DSpaceRestClient(DEMO_DSPACE_URL + "/", restTemplate);
+        assertEquals("normalized url", DEMO_DSPACE_URL, client.getBaseUrl());
+    }
+
     /**
      * Tests the HTML returned by the root URL.
      */

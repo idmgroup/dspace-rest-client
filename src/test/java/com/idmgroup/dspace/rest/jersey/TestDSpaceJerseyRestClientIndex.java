@@ -6,6 +6,7 @@ import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_PASSWORD;
 import static com.idmgroup.dspace.rest.TestConstants.DEMO_DSPACE_URL;
 import static com.idmgroup.dspace.rest.jersey.JerseyTestUtils.user;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -15,9 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.idmgroup.dspace.rest.TestUtils;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 /**
  * Tests the REST client (Index).
@@ -27,9 +25,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 public class TestDSpaceJerseyRestClientIndex {
 
     private DSpaceJerseyRestClient newClient(String url) throws Exception {
-        ClientConfig cc = new DefaultClientConfig();
-        Client cl = Client.create(cc);
-        DSpaceJerseyRestClient client = new DSpaceJerseyRestClient(url, cl);
+        DSpaceJerseyRestClient client = new DSpaceJerseyRestClient(url, null);
         client.init();
         return client;
     }
@@ -37,6 +33,19 @@ public class TestDSpaceJerseyRestClientIndex {
     @Before
     public void setUp() {
         TestUtils.trustAllSSL();
+    }
+
+    /**
+     * Code coverage.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testConstruction() throws Exception {
+        DSpaceJerseyRestClient client = new DSpaceJerseyRestClient(DEMO_DSPACE_URL + "/", null);
+        client.init();
+        assertEquals("normalized url", DEMO_DSPACE_URL, client.getBaseUrl());
+        assertNotNull("jersey client", client.getClient());
     }
 
     /**

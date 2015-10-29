@@ -20,9 +20,6 @@ import org.junit.Test;
 import org.mockito.internal.matchers.Matches;
 
 import com.idmgroup.dspace.rest.TestUtils;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 public class TestDSpaceJerseyRestClientCollections {
 
@@ -52,9 +49,7 @@ public class TestDSpaceJerseyRestClientCollections {
     }
 
     private DSpaceJerseyRestClient newClient(String url) throws Exception {
-        ClientConfig cc = new DefaultClientConfig();
-        Client cl = Client.create(cc);
-        DSpaceJerseyRestClient client = new DSpaceJerseyRestClient(url, cl);
+        DSpaceJerseyRestClient client = new DSpaceJerseyRestClient(url);
         client.init();
         return client;
     }
