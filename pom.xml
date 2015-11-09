@@ -75,7 +75,7 @@
                         <argument>jersey1x</argument>
                         <argument>-p</argument>
                         <argument>com.idmgroup.dspace.rest.jersey</argument>
-                        <argument>${project.basedir}/src/main/resources/org/dspace/demo/rest/application.wadl</argument>
+                        <argument>${project.baseUri}/src/main/resources/org/dspace/demo/rest/application.wadl</argument>
                     </arguments>
                 </configuration>
             </plugin>
