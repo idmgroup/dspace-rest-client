@@ -34,8 +34,7 @@ public class TestDSpaceJerseyRestClientItems {
     private void cleanCommunitiesByName(DSpaceJerseyRestClient client, String communityName) {
         int offset = 0;
         while (true) {
-            // FIXME apparently jersey has difficulties with Community entities in JSON => XML.
-            Community[] slice = client.communities().getAsXml(null, 20, offset, null, null, null, Community[].class);
+            Community[] slice = client.communities().getAsJson(null, 20, offset, null, null, null, Community[].class);
             if (slice != null && slice.length > 0) {
                 for (Community com : slice) {
                     if (communityName.equals(com.getName())) {
@@ -91,18 +90,22 @@ public class TestDSpaceJerseyRestClientItems {
 
         Community community = new Community();
         community.setName(TEST_COMMUNITY_NAME);
-        Community result = client.communities().postJsonAsCommunity(community);
+        Community result = client.communities().postJsonAs(community, Community.class);
         final Integer comId = result.getId();
 
         Collection collection = new Collection();
         collection.setName(TEST_COLLECTION_NAME);
         Collection resultCol = client.communities().community_idCollections(comId)
-                .postJsonAsCollection(collection, null, null, null);
+                .postJsonAs(collection, null, null, null, Collection.class);
         final Integer colId = resultCol.getId();
 
         Item item = new Item();
-        item.setName("Logo IDM");
-        Item resultItem = client.collections().collection_idItems(colId).postJsonAsItem(item);
+        MetadataEntry titleMD = new MetadataEntry();
+        titleMD.setKey("dc.title");
+        titleMD.setValue("Logo IDM");
+        item.getMetadata().add(titleMD);
+
+        Item resultItem = client.collections().collection_idItems(colId).postJsonAs(item, Item.class);
         assertNotNull("created item", resultItem);
         assertNotNull("created item ID", resultItem.getId());
         assertTrue("created item ID > 0", resultItem.getId() > 0);
@@ -112,7 +115,7 @@ public class TestDSpaceJerseyRestClientItems {
         resultItem = client.items().item_id(itemId).getAsItemJson();
         assertEquals("get item ID", itemId, resultItem.getId());
         // XXX Well, I think I spotted a bug in DSpace REST API.
-        assertEquals("get item name", /* FIXME "Logo IDM" */null, resultItem.getName());
+        assertEquals("get item name", "Logo IDM", resultItem.getName());
 
         Bitstream bitstream;
         bitstream = createBitstream(client, itemId, "com/idmgroup/brand/logo-idm_big_transparent_hd.png");
@@ -149,5 +152,4 @@ public class TestDSpaceJerseyRestClientItems {
         client.collections().collection_id(colId).deleteAs(String.class);
         client.communities().community_id(comId).deleteAs(String.class);
     }
-
 }

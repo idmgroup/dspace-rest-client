@@ -26,6 +26,7 @@ import com.idmgroup.dspace.rest.jersey.Bitstream;
 import com.idmgroup.dspace.rest.jersey.Collection;
 import com.idmgroup.dspace.rest.jersey.Community;
 import com.idmgroup.dspace.rest.jersey.Item;
+import com.idmgroup.dspace.rest.jersey.MetadataEntry;
 
 public class TestDSpaceRestClientItems {
 
@@ -100,7 +101,10 @@ public class TestDSpaceRestClientItems {
         final Integer colId = resultCol.getId();
 
         Item item = new Item();
-        item.setName("Logo IDM");
+        MetadataEntry titleMD = new MetadataEntry();
+        titleMD.setKey("dc.title");
+        titleMD.setValue("Logo IDM");
+        item.getMetadata().add(titleMD);
         Item resultItem = client.addCollectionItem(colId, item);
         assertNotNull("created item", resultItem);
         assertNotNull("created item ID", resultItem.getId());
@@ -111,7 +115,7 @@ public class TestDSpaceRestClientItems {
         resultItem = client.getItem(itemId, null);
         assertEquals("get item ID", itemId, resultItem.getId());
         // XXX Well, I think I spotted a bug in DSpace REST API.
-        assertEquals("get item name", /* FIXME "Logo IDM" */null, resultItem.getName());
+        assertEquals("get item name", "Logo IDM", resultItem.getName());
 
         Bitstream bitstream;
         bitstream = createBitstream(client, itemId, "com/idmgroup/brand/logo-idm_big_transparent_hd.png");

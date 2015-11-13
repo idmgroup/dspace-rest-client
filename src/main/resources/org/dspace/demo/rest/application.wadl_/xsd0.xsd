@@ -106,6 +106,7 @@
           <xs:element name="introductoryText" type="xs:string" minOccurs="0"/>
           <xs:element name="items" type="item" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
           <xs:element name="license" type="xs:string" minOccurs="0"/>
+          <xs:element name="logo" type="bitstream" minOccurs="0"/>
           <xs:element name="numberItems" type="xs:int" minOccurs="0"/>
           <xs:element name="parentCommunity" type="community" minOccurs="0"/>
           <xs:element name="parentCommunityList" type="community" nillable="true" minOccurs="0" maxOccurs="unbounded"/>

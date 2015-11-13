@@ -32,8 +32,7 @@ public class TestDSpaceJerseyRestClientCollections {
     private void cleanCommunitiesByName(DSpaceJerseyRestClient client, String communityName) {
         int offset = 0;
         while (true) {
-            // FIXME apparently jersey has difficulties with Community entities in JSON => XML.
-            Community[] slice = client.communities().getAsXml(null, 20, offset, null, null, null, Community[].class);
+            Community[] slice = client.communities().getAsJson(null, 20, offset, null, null, null, Community[].class);
             if (slice != null && slice.length > 0) {
                 for (Community com : slice) {
                     if (communityName.equals(com.getName())) {
@@ -67,20 +66,20 @@ public class TestDSpaceJerseyRestClientCollections {
 
         Community community = new Community();
         community.setName(TEST_COMMUNITY_NAME);
-        Community result = client.communities().postJsonAsCommunity(community);
+        Community result = client.communities().postJsonAs(community, Community.class);
         final Integer comId = result.getId();
 
         Collection collection = new Collection();
         collection.setName(TEST_COLLECTION_NAME);
         Collection resultCol = client.communities().community_idCollections(comId)
-                .postJsonAsCollection(collection, null, null, null);
+                .postJsonAs(collection, null, null, null, Collection.class);
         assertNotNull("created collection", resultCol);
         assertNotNull("created collection ID", resultCol.getId());
         assertTrue("created collection ID > 0", resultCol.getId() > 0);
         assertThat("created collection handle", resultCol.getHandle(), new Matches("[0-9]+/[0-9]+"));
         final Integer colId = resultCol.getId();
 
-        resultCol = client.collections().collection_id(colId).getAsCollectionJson(null, 0, 0, null, null, null);
+        resultCol = client.collections().collection_id(colId).getAsJson(null, 0, 0, null, null, null, Collection.class);
         assertEquals("get collection ID", colId, resultCol.getId());
         assertEquals("get collection name", TEST_COLLECTION_NAME, resultCol.getName());
 

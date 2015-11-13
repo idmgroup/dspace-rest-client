@@ -36,8 +36,7 @@ public class TestDSpaceJerseyRestClientCommunities {
     private void cleanCommunitiesByName(DSpaceJerseyRestClient client, String communityName) {
         int offset = 0;
         while (true) {
-            // FIXME apparently jersey has difficulties with Community entities in JSON => XML.
-            Community[] slice = client.communities().getAsXml(null, 20, offset, null, null, null, Community[].class);
+            Community[] slice = client.communities().getAsJson(null, 20, offset, null, null, null, Community[].class);
             if (slice != null && slice.length > 0) {
                 for (Community com : slice) {
                     if (communityName.equals(com.getName())) {
@@ -73,7 +72,7 @@ public class TestDSpaceJerseyRestClientCommunities {
 
         Community community = new Community();
         community.setName(TEST_COMMUNITY_NAME);
-        Community result = client.communities().postJsonAsCommunity(community);
+        Community result = client.communities().postJsonAs(community, Community.class);
         assertNotNull("created community", result);
         assertNotNull("created community ID", result.getId());
         assertTrue("created community ID > 0", result.getId() > 0);

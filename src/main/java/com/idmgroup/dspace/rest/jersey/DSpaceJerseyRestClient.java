@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.core.MultivaluedMap;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Bitstreams;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Collections;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Communities;
@@ -129,6 +130,7 @@ public class DSpaceJerseyRestClient {
     public void init() throws URISyntaxException {
         if (this.client == null) {
             ClientConfig cc = new DefaultClientConfig();
+            cc.getClasses().add(JacksonJsonProvider.class);
             this.client = Client.create(cc);
         }
         this.client.addFilter(new ClientFilter() {
@@ -159,7 +161,7 @@ public class DSpaceJerseyRestClient {
     }
 
     public String loginJsonAsUser(User input) {
-        String result = this.root().login().postJsonAs(objectFactory.createUser(input), String.class);
+        String result = this.root().login().postJsonAs(input, String.class);
         if (result == null || result.length() <= 0)
             result = null;
         dspaceToken = result;
