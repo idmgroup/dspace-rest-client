@@ -50,5 +50,3 @@ $ ./scripts/wadl2java.pl \
 
 * create a 5_x branch (current code is based on DSpace 5.3 REST API)
 * update master to be compatible with DSpace 6.0-SNAPSHOT
-* fix the spotted DSpace issue and request a pull (addCollectionItem seems not to save the item name)
-
