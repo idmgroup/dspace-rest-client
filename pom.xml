@@ -1,17 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.idmgroup.dspace</groupId>
     <artifactId>dspace-rest-client</artifactId>
     <packaging>jar</packaging>
-    <version>5.4.0-SNAPSHOT</version>
+    <version>5.4.0</version>
     <name>DSpace REST Client</name>
     <description>DSpace RESTful Web Services API Client</description>
 
     <scm>
         <connection>scm:git:git://git@github.com:idmgroup/dspace-rest-client.git</connection>
         <developerConnection>scm:git:git@github.com:idmgroup/dspace-rest-client.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>dspace-rest-client-5.4.0</tag>
     </scm>
 
     <properties>
