@@ -3,14 +3,14 @@
     <groupId>com.idmgroup.dspace</groupId>
     <artifactId>dspace-rest-client</artifactId>
     <packaging>jar</packaging>
-    <version>5.4.0</version>
+    <version>5.4.1-SNAPSHOT</version>
     <name>DSpace REST Client</name>
     <description>DSpace RESTful Web Services API Client</description>
 
     <scm>
         <connection>scm:git:git://git@github.com:idmgroup/dspace-rest-client.git</connection>
         <developerConnection>scm:git:git@github.com:idmgroup/dspace-rest-client.git</developerConnection>
-        <tag>dspace-rest-client-5.4.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
