@@ -217,6 +217,19 @@ $post_call_code
 
 EOF
                 ;
+            } elsif ($method_name eq 'getObject') {
+                print <<EOF
+    public <T> T $method_name($params_str, Class<T> returnType) {
+$pre_call_code$pre_call_code2$overl->{url_code}
+        // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
+        T result = restTemplate.exchange(queryBuilder.$build_code.toUriString(), HttpMethod.$method_verb,
+                $request_entity, returnType).getBody();
+$post_call_code
+        return result;
+    }
+
+EOF
+                ;
             } else {
                 print <<EOF
     public $return_type $method_name($params_str) {

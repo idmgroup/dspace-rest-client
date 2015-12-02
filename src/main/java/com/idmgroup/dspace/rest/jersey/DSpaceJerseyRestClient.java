@@ -10,6 +10,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Bitstreams;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Collections;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Communities;
+import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Handle;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Items;
 import com.idmgroup.dspace.rest.jersey.DemoDspaceOrg_Rest.Root;
 import com.sun.jersey.api.client.Client;
@@ -119,6 +120,15 @@ public class DSpaceJerseyRestClient {
      */
     public Client getClient() {
         return client;
+    }
+
+    /**
+     * Get the handle resource.
+     * 
+     * @return the handle resource.
+     */
+    public Handle handle() {
+        return DemoDspaceOrg_Rest.handle(client, baseUri);
     }
 
     /**

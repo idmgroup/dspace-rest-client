@@ -1014,7 +1014,7 @@ public class DSpaceRestClient {
         return result;
     }
 
-    public Object getObject(String prefix, String suffix, String expand) {
+    public <T> T getObject(String prefix, String suffix, String expand, Class<T> returnType) {
 
         Map<String, Object> uriVariables = new LinkedHashMap<String, Object>();
         if (prefix != null) {
@@ -1026,8 +1026,8 @@ public class DSpaceRestClient {
         UriComponentsBuilder queryBuilder = UriComponentsBuilder.fromUriString(baseUrl).path("/handle/{prefix}/{suffix}")
                 .queryParam("expand", expand);
         // "toUri" has a problem with encoding the query string, this is why we use "toUriString"
-        Object result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
-                toEntity(null), Object.class).getBody();
+        T result = restTemplate.exchange(queryBuilder.buildAndExpand(uriVariables).toUriString(), HttpMethod.GET,
+                toEntity(null), returnType).getBody();
 
         return result;
     }
