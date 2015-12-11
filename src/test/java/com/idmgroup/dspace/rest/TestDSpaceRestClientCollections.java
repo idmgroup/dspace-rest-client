@@ -25,30 +25,6 @@ import com.idmgroup.dspace.rest.jersey.Community;
 
 public class TestDSpaceRestClientCollections {
 
-    private void clean() {
-        DSpaceRestClient client = newClient(DEMO_DSPACE_URL);
-        client.login(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
-        cleanCommunitiesByName(client, TEST_COMMUNITY_NAME);
-    }
-
-    private void cleanCommunitiesByName(DSpaceRestClient client, String communityName) {
-        int offset = 0;
-        while (true) {
-            Community[] slice = client.getCommunities(null, 20, offset);
-            if (slice != null && slice.length > 0) {
-                for (Community com : slice) {
-                    if (communityName.equals(com.getName())) {
-                        client.deleteCommunity(com.getId());
-                    } else {
-                        ++offset;
-                    }
-                }
-            } else {
-                break;
-            }
-        }
-    }
-
     private DSpaceRestClient newClient(String url) {
         RestTemplate restTemplate = new RestTemplate();
         return new DSpaceRestClient(url, restTemplate);
@@ -57,7 +33,6 @@ public class TestDSpaceRestClientCollections {
     @Before
     public void setUp() {
         TestUtils.trustAllSSL();
-        clean();
     }
 
     @Test

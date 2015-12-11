@@ -25,30 +25,6 @@ import com.idmgroup.dspace.rest.TestUtils;
 
 public class TestDSpaceJerseyRestClientItems {
 
-    private void clean() throws Exception {
-        DSpaceJerseyRestClient client = newClient(DEMO_DSPACE_URL);
-        client.loginJsonAsUser(user(DEMO_DSPACE_ADMIN, DEMO_DSPACE_PASSWORD));
-        cleanCommunitiesByName(client, TEST_COMMUNITY_NAME);
-    }
-
-    private void cleanCommunitiesByName(DSpaceJerseyRestClient client, String communityName) {
-        int offset = 0;
-        while (true) {
-            Community[] slice = client.communities().getAsJson(null, 20, offset, null, null, null, Community[].class);
-            if (slice != null && slice.length > 0) {
-                for (Community com : slice) {
-                    if (communityName.equals(com.getName())) {
-                        client.communities().community_id(com.getId()).deleteAs(String.class);
-                    } else {
-                        ++offset;
-                    }
-                }
-            } else {
-                break;
-            }
-        }
-    }
-
     private Bitstream createBitstream(DSpaceJerseyRestClient client, int itemId, String resourceName) {
         final String baseName = resourceName.replaceAll("^.*/([^/]+)$", "$1");
         InputStream content = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourceName);
@@ -80,7 +56,6 @@ public class TestDSpaceJerseyRestClientItems {
     @Before
     public void setUp() throws Exception {
         TestUtils.trustAllSSL();
-        clean();
     }
 
     @Test
